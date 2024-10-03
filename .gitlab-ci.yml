@@ -1,3 +1,11 @@
+image: alpine
+
+services:
+  - docker:19.03.12-dind
+
+before_script:
+  - apk update && apk add docker-compose
+
 stages:
   - build
   - test
