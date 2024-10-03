@@ -9,6 +9,7 @@ image:
 services:
   - name: docker:dind
     command: ["--privileged"]  # Enable privileged mode for DinD
+    network_mode: bridge  # Ensure DinD runs in bridge network mode
 
 before_script:
   - docker version
