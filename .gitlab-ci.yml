@@ -1,17 +1,6 @@
-variables:
-  DOCKER_HOST: tcp://docker:2375/
-  DOCKER_DRIVER: overlay2
-
-# Official docker compose image.
-image:
-  name: docker/compose:latest
-
+image: docker
 services:
   - docker:dind
-
-before_script:
-  - docker version
-  - docker-compose version
 
 stages:
   - build
