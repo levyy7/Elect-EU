@@ -1,0 +1,15 @@
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - docker-compose build
+
+test:
+  stage: test
+  script:
+    - docker-compose up -d
+    - docker-compose exec flask-app pytest app/tests
+    - docker-compose down
