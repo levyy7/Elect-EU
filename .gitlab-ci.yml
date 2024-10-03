@@ -1,10 +1,11 @@
-image: alpine
+image: docker:19.03.12
 
 services:
   - docker:19.03.12-dind
 
-before_script:
-  - apk update && apk add docker-compose
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
 
 stages:
   - build
