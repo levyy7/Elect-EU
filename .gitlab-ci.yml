@@ -1,11 +1,17 @@
-image: docker/compose:1.29.2
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+
+# Official docker compose image.
+image:
+  name: docker/compose:latest
 
 services:
-  - docker:19.03.12-dind
+  - docker:dind
 
-variables:
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
+before_script:
+  - docker version
+  - docker-compose version
 
 stages:
   - build
