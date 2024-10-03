@@ -1,19 +1,6 @@
-variables:
-  DOCKER_HOST: tcp://docker:2375/
-  DOCKER_TLS_CERTDIR: ""  # Disable TLS for Docker
-
-# Official docker compose image.
-image:
-  name: docker/compose:latest
-
+image: docker
 services:
-  - name: docker:dind
-    command: ["--privileged"]  # Enable privileged mode for DinD
-    network_mode: bridge  # Ensure DinD runs in bridge network mode
-
-before_script:
-  - docker version
-  - docker-compose version
+  - docker:dind
 
 stages:
   - build
