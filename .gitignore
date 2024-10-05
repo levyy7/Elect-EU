@@ -1,7 +1,53 @@
+# Python-related files
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
 
-# Python Cache files
+# Flask-specific
+instance/
+*.log
+
+# MongoDB-related
+*.lock
+*.db
+*.sqlite3
 *.pyc
 
-# IDEs and editor specific files
-.vscode/
+# Environment Variables
+.env
+
+# Docker-related files
+*.log
+docker-compose.yml
+Dockerfile
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.cache/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
 .idea/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Linux
+*.swp
