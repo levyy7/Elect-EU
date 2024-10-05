@@ -4,7 +4,4 @@ class Vote:
         self.vote_id = vote_id
 
     def to_json(self):
-        return {
-            "user_id": self.user_id,
-            "vote_id": self.vote_id
-        }
+        return {"user_id": self.user_id, "vote_id": self.vote_id}

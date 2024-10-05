@@ -1,6 +1,7 @@
 from app import mongo
 from app.models import Vote
 
+
 class VoteService:
     @staticmethod
     def store_vote(vote: Vote):

@@ -14,5 +14,5 @@ class TestVoteModel(unittest.TestCase):
         self.assertEqual(vote.to_json(), expected_json)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
