@@ -7,6 +7,11 @@ stages:
   - unit_tests
   - integration_tests
 
+build:
+  stage: build
+  script:
+    - docker-compose build
+
 unit_tests:
   stage: unit_tests
   script:
