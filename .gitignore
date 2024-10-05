@@ -7,6 +7,9 @@ dist/
 build/
 .eggs/
 
+# Cache of the tests
+/.pytest_cache/
+
 # Byte-compiled / optimized / DLL files
 *.py[cod]
 
@@ -15,4 +18,5 @@ build/
 
 # VSCode
 .vscode/
+
 

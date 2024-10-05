@@ -3,9 +3,18 @@ services:
   - docker:dind
 
 stages:
+  - lint
   - build
   - unit_tests
   - integration_tests
+  -
+# Linting stage (Check for proper formatting and checktyle rules)
+
+lint:
+  stage: lint
+  script:
+    - docker-compose run --rm flask-app black --check .
+    - docker-compose run --rm flask-app flake8 .
 
 build:
   stage: build
