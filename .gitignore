@@ -1,3 +1,7 @@
+
+# Python Cache files
+*.pyc
+
 # IDEs and editor specific files
 .vscode/
 .idea/
