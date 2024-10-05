@@ -7,38 +7,8 @@ dist/
 build/
 .eggs/
 
-# Flask-specific
-instance/
-*.log
-
-# MongoDB-related
-*.lock
-*.db
-*.sqlite3
-*.pyc
-
-# Environment Variables
-.env
-
-# Docker-related files
-*.log
-docker-compose.yml
-Dockerfile
-
 # Byte-compiled / optimized / DLL files
 *.py[cod]
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.cache/
-coverage.xml
-*.cover
-.hypothesis/
-
-# Jupyter Notebook
-.ipynb_checkpoints
 
 # PyCharm
 .idea/
@@ -46,8 +16,3 @@ coverage.xml
 # VSCode
 .vscode/
 
-# macOS
-.DS_Store
-
-# Linux
-*.swp
