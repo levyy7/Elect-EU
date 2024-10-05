@@ -7,6 +7,7 @@ exclude =
     venv,
     .venv,
     build,
-    dist
+    dist,
+    app/__init__.py
 
 # File that stores the checkstyle rules
