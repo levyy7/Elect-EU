@@ -6,5 +6,3 @@ app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://mongo:27017/votes_db"
 mongo = PyMongo(app)
 
-# Import routes
-from app import routes
