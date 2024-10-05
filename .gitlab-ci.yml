@@ -4,16 +4,19 @@ services:
 
 stages:
   - build
-  - test
+  - unit_tests
+  - integration_tests
 
-build:
-  stage: build
+unit_tests:
+  stage: unit_tests
   script:
-    - docker-compose build
+    - docker-compose run --rm flask-app python -m unittest discover -s app/tests/unit
+# discover command: This is a unittest sub-command that automatically discovers and runs tests in
+# the specified directory. It looks for test files matching the pattern test*.py by default.
 
-test:
-  stage: test
+integration_tests:
+  stage: integration_tests
   script:
     - docker-compose up -d
-    - docker-compose exec flask-app pytest app/tests
+    - docker-compose exec flask-app pytest app/tests/integration
     - docker-compose down
