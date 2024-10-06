@@ -45,7 +45,7 @@ class TestVoteOptionModel(unittest.TestCase):
             photo="photo1",
         )
         expected_json = {
-            "vote_option_id": 1,
+            "vote_option_id": "1",
             "party_name": "party1",
             "candidates": ["name0", "name1"],
             "photo": "photo1",
@@ -82,19 +82,19 @@ class TestElectionModel(unittest.TestCase):
             "dateISO": "06-10-2024",
             "vote_options": [
                 {
-                    "vote_option_id": 1,
+                    "vote_option_id": "1",
                     "party_name": "party1",
                     "candidates": ["name0", "name1"],
                     "photo": "photo1",
                 },
                 {
-                    "vote_option_id": 2,
+                    "vote_option_id": "2",
                     "party_name": "party2",
                     "candidates": ["name0", "name1"],
                     "photo": "photo2",
                 },
                 {
-                    "vote_option_id": 3,
+                    "vote_option_id": "3",
                     "party_name": "party3",
                     "candidates": ["name0", "name1"],
                     "photo": "photo3",
