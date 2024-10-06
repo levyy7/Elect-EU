@@ -32,7 +32,7 @@ class TestVoteOptionModel(unittest.TestCase):
             candidates=["name0", "name1"],
             photo="photo1",
         )
-        self.assertEqual(vote_option.vote_option_id, "1")
+        self.assertEqual(vote_option.id, "1")
         self.assertEqual(vote_option.party_name, "party1")
         self.assertEqual(vote_option.candidates, ["name0", "name1"])
         self.assertEqual(vote_option.photo, "photo1")
@@ -47,7 +47,7 @@ class TestVoteOptionModel(unittest.TestCase):
         expected_json = {
             "vote_option_id": 1,
             "party_name": "party1",
-            "candidates": ["name0", "name1", "name2"],
+            "candidates": ["name0", "name1"],
             "photo": "photo1",
         }
         self.assertEqual(vote_option.to_json(), expected_json)
