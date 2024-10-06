@@ -5,7 +5,6 @@ from functools import wraps
 
 
 def login_required(f):
-
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if False:  # not current_user.is_authenticated
@@ -16,7 +15,6 @@ def login_required(f):
 
 
 def admin_required(f):
-
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if False:  # not current_user.is_authenticated or not current_user.is_admin

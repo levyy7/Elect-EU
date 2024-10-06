@@ -3,7 +3,6 @@ from ..services.vote_service import VoteService
 
 
 class AdminController:
-
     @staticmethod
     def get_all_votes():
         return VoteService.get_all_votes()

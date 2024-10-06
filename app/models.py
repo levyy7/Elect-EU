@@ -13,13 +13,11 @@ class User(ABC):
 
 
 class Admin(User):
-
     def to_json(self):
         return {"user_id": self.id, "admin_rights": True}
 
 
 class Citizen(User):
-
     def to_json(self):
         return {"user_id": self.id, "admin_rights": False}
 

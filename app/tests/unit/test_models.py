@@ -54,7 +54,6 @@ class TestVoteOptionModel(unittest.TestCase):
 
 
 class TestElectionModel(unittest.TestCase):
-
     def test_election_to_json(self):
         vote_option1 = VoteOption(
             vote_option_id="1",

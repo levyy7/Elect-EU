@@ -6,7 +6,6 @@ from ..services.vote_service import VoteService
 
 
 class CitizenController:
-
     @staticmethod
     def get_current_election():
         currentElection = load_election()
