@@ -1,0 +1,22 @@
+# Python-related files
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Cache of the tests
+/.pytest_cache/
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+
+
