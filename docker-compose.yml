@@ -7,7 +7,7 @@ services:
       - "27017:27017"
   flask-app:
     build: .
-    command: flask run --host=0.0.0.0
+    command: flask run --host=0.0.0.0 --cert=cert.pem --key=key-no-pass.pem
     volumes:
       - .:/usr/src/app
     ports:
