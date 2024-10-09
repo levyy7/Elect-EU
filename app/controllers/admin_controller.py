@@ -13,8 +13,9 @@ blueprint_admin = Blueprint("admin", __name__)
 def get_users(user_service: UserService):
     try:
         return jsonify(user_service.get_all_users()), 200
-    except Exception:
-        return jsonify({"error": "Internal Server Error"}), 500
+    except Exception as e:
+        msg = "Internal Server Error: " + str(e)
+        return jsonify({"error": msg}), 500
 
 
 @blueprint_admin.route("/user_delete", methods=["POST"])
@@ -34,8 +35,9 @@ def delete_user(user_service: UserService):
         return jsonify({"error": str(e)}), 400
     except UserNotFoundError as e:
         return jsonify({"error": str(e)}), 402
-    except Exception:
-        return jsonify({"error": "Internal Server Error"}), 500
+    except Exception as e:
+        msg = "Internal Server Error: " + str(e)
+        return jsonify({"error": msg}), 500
 
 
 @blueprint_admin.route("/votes", methods=["GET"])
@@ -43,5 +45,6 @@ def delete_user(user_service: UserService):
 def get_votes(vote_service: VoteService):
     try:
         return jsonify(vote_service.get_all_votes()), 200
-    except Exception:
-        return jsonify({"error": "Internal Server Error"}), 500
+    except Exception as e:
+        msg = "Internal Server Error: " + str(e)
+        return jsonify({"error": msg}), 500

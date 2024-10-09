@@ -30,7 +30,7 @@ class VoteService:
             raise UserHasAlreadyVotedError(user_id)
 
         vote = {"user_id": user_id, "vote_option_id": vote_option_id}
-        VoteService.store_vote(vote)
+        self.vote_repository.store_vote(vote)
 
     def get_all_votes(self):
         return self.vote_repository.get_all_votes()

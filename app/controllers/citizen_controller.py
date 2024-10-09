@@ -18,8 +18,9 @@ def get_election(election_service: ElectionService):
     try:
         election = election_service.get_current_election()
         return (jsonify(election), 200)
-    except Exception:
-        return jsonify({"error": "Internal Server Error"}), 500
+    except Exception as e:
+        msg = "Internal Server Error: " + str(e)
+        return jsonify({"error": msg}), 500
 
 
 @blueprint_citizen.route("/register", methods=["POST"])
@@ -39,8 +40,9 @@ def register_citizen(user_service: UserService):
         return jsonify({"error": str(e)}), 400
     except UserAlreadyExistsError as e:
         return jsonify({"error": str(e)}), 402
-    except Exception:
-        return jsonify({"error": "Internal Server Error"}), 500
+    except Exception as e:
+        msg = "Internal Server Error: " + str(e)
+        return jsonify({"error": msg}), 500
 
 
 @blueprint_citizen.route("/vote", methods=["POST"])
@@ -54,6 +56,8 @@ def vote(vote_service: VoteService):
         if not user_id or not vote_option_id:
             raise MissingFieldsError()
 
+        vote_service.vote_in_election(user_id, vote_option_id)
+
         return jsonify({"message": "Vote submitted succesfully."}), 200
     except MissingFieldsError as e:
         return jsonify({"error": str(e)}), 400
@@ -63,5 +67,6 @@ def vote(vote_service: VoteService):
         return jsonify({"error": str(e)}), 404
     except UserHasAlreadyVotedError as e:
         return jsonify({"error": str(e)}), 401
-    except Exception:
-        return jsonify({"error": "Internal Server Error"}), 500
+    except Exception as e:
+        msg = "Internal Server Error: " + str(e)
+        return jsonify({"error": msg}), 500
