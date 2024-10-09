@@ -1,19 +1,29 @@
-import bcrypt
+from cryptography.fernet import Fernet
 
 class Vote:
+    # You should securely store the encryption key and load it from a secure place.
+    # For demonstration purposes, we're generating a key here.
+    key = Fernet.generate_key()  # This should be stored securely
+    cipher = Fernet(key)
+
     def __init__(self, user_id, vote_id):
         self.user_id = user_id
         self.vote_id = vote_id
 
-    def hash_data(self, data):
-        # Bcrypt automatically handles salting
-        salt = bcrypt.gensalt()
-        hashed_data = bcrypt.hashpw(data.encode('utf-8'), salt)
-        return hashed_data.decode('utf-8')
+    def encrypt_data(self, data):
+        # Encrypt the data
+        encrypted_data = self.cipher.encrypt(data.encode('utf-8'))
+        return encrypted_data.decode('utf-8')
 
     def to_json(self):
-        # Hash user_id and vote_id before saving them
+        # Encrypt user_id and vote_id before saving them
         return {
-            "user_id": self.hash_data(self.user_id),
-            "vote_id": self.hash_data(self.vote_id)
+            "user_id": self.encrypt_data(self.user_id),
+            "vote_id": self.encrypt_data(self.vote_id)
         }
+
+    def decrypt_data(self, encrypted_data):
+        # Decrypt the data
+        decrypted_data = self.cipher.decrypt(encrypted_data.encode('utf-8'))
+        return decrypted_data.decode('utf-8')
+
