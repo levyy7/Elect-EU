@@ -23,7 +23,7 @@ class TestVoteModel(unittest.TestCase):
         expected_json = {"user_id": "1", "vote_id": "123"}
         encrypted_json = vote.encrypt_json()
         self.assertNotEqual(encrypted_json, expected_json)
-        self.assertEqual(vote.decrypt(encrypted_json), expected_json)
+        self.assertEqual(vote.decrypt_data(encrypted_json), expected_json)
 
 
 if __name__ == "__main__":
