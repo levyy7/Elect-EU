@@ -1,44 +1,61 @@
-from flask import jsonify
-from ..models import Citizen
-from ..utils.data_loader import load_election
+from flask import request, jsonify
+from app import app
 from ..services.user_service import UserService
 from ..services.vote_service import VoteService
+from ..services.election_service import ElectionService
+from ..exceptions.user_not_found_error import UserNotFoundError
+from ..exceptions.vote_option_not_found_error import VoteOptionNotFoundError
+from ..exceptions.user_has_already_voted_error import UserHasAlreadyVotedError
+from ..exceptions.user_already_exists_error import UserAlreadyExistsError
+from ..exceptions.missing_fields_error import MissingFieldsError
 
 
 class CitizenController:
-    @staticmethod
-    def get_current_election():
-        currentElection = load_election()
+    @app.route("/election", methods=["GET"])
+    def get_election():
+        try:
+            election = ElectionService.get_current_election()
+            return (jsonify(election), 200)
+        except Exception:
+            return jsonify({"error": "Internal Server Error"}), 500
 
-        return currentElection.to_json()
+    @app.route("/register", methods=["POST"])
+    def register_citizen():
+        try:
+            data = request.get_json()
+            user_id = data.get("user_id")
 
-    @staticmethod
-    def create_citizen(user_id):
-        all_users = UserService.get_all_users()
+            if not user_id:
+                raise MissingFieldsError()
 
-        if any(user.get("user_id") == user_id for user in all_users):
-            return jsonify({"error": "Already exists a user with that user_id"}), 400
-        else:
-            citizen = Citizen(user_id)
-            UserService.store_user(citizen.to_json())
+            UserService.create_user(user_id)
+            
             return jsonify({"message": "Citizen created succesfully"}), 200
+        except MissingFieldsError as e:
+            return jsonify({"error": str(e)}), 400
+        except UserAlreadyExistsError as e:
+            return jsonify({"error": str(e)}), 402
+        except Exception:
+            return jsonify({"error": "Internal Server Error"}), 500
 
-    @staticmethod
-    def vote_in_election(user_id, vote_option_id):
-        all_users = UserService.get_all_users()
-        all_votes = VoteService.get_all_votes()
-        vote_options = load_election().to_json()["vote_options"]
+    @app.route("/vote", methods=["POST"])
+    def vote():
+        try:
+            data = request.get_json()
+            user_id = data.get("user_id")
+            vote_option_id = data.get("vote_option_id")
 
-        if not any(user.get("user_id") == user_id for user in all_users):
-            return jsonify({"error": "The specified user does not exist"}), 401
-        elif not any(
-            vote_option.get("vote_option_id") == vote_option_id
-            for vote_option in vote_options
-        ):
-            return jsonify({"error": "The specified vote_option does not exist"}), 402
-        elif any(vote.get("user_id") == user_id for vote in all_votes):
-            return jsonify({"error": "The specified user has already voted"}), 403
-        else:
-            vote = {"user_id": user_id, "vote_option_id": vote_option_id}
-            VoteService.store_vote(vote)
-            return jsonify({"message": "Vote submitted succesfully"}), 201
+            if not user_id or not vote_option_id:
+                raise MissingFieldsError()
+
+            return VoteService.vote_in_election(user_id, vote_option_id)
+        except MissingFieldsError as e:
+            return jsonify({"error": str(e)}), 400
+        except UserNotFoundError as e:
+            return jsonify({"error": str(e)}), 404
+        except VoteOptionNotFoundError as e:
+            return jsonify({"error": str(e)}), 404
+        except UserHasAlreadyVotedError as e:
+            return jsonify({"error": str(e)}), 401
+        except Exception:
+            return jsonify({"error": "Internal Server Error"}), 500
