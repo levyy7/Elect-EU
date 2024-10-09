@@ -23,6 +23,10 @@ class VoteAppTestCase(unittest.TestCase):
 
 
 class SecurityTestCase(unittest.TestCase):
+    def setUp(self):
+        self.app = app.test_client()
+        self.app.testing = True
+
     def test_encryption_database(self):
         # Post a vote
         response = self.app.post("/vote", json={"user_id": "1", "vote_id": "123"})
