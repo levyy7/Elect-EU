@@ -23,6 +23,7 @@ def get_votes():
     votes = VoteService.get_all_votes()
     return jsonify(votes), 200
 
+
 @app.route("/votes", methods=["GET_RAW"])
 def get_all_votes_raw():
     votes = VoteService.get_all_votes_raw()

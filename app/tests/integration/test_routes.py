@@ -1,6 +1,5 @@
 import unittest
 from app import app
-from cryptography.fernet import Fernet
 
 
 class VoteAppTestCase(unittest.TestCase):
@@ -31,7 +30,7 @@ class SecurityTestCase(unittest.TestCase):
         self.assertEqual(response.json.get("message"), "Vote stored successfully")
 
         # Fetch the vote from the database
-        stored_votes = mongo.db.votes.find_one({}, {"_id": 0})
+        stored_votes = self.app.get_all_votes_raw()
 
         # Check if the vote is stored in encrypted format
         self.assertIsNotNone(stored_votes)
@@ -57,7 +56,7 @@ class SecurityTestCase(unittest.TestCase):
         self.assertEqual(response.json.get("message"), "Vote stored successfully")
 
         # Fetch the vote from the database
-        stored_votes = mongo.db.votes.find_one({}, {"_id": 0})
+        stored_votes = self.app.get_all_votes()
 
         # Check if the vote is stored
         self.assertIsNotNone(stored_votes)
@@ -65,8 +64,12 @@ class SecurityTestCase(unittest.TestCase):
         self.assertIn("vote_id", stored_votes)
 
         # Decrypt the stored values to verify
-        decrypted_user_id = self.cipher.decrypt(stored_votes["user_id"].encode()).decode()
-        decrypted_vote_id = self.cipher.decrypt(stored_votes["vote_id"].encode()).decode()
+        decrypted_user_id = (
+            self.cipher.decrypt(stored_votes["user_id"].encode()).decode()
+        )
+        decrypted_vote_id = (
+            self.cipher.decrypt(stored_votes["vote_id"].encode()).decode()
+        )
 
         # Assert that the decrypted values match the original inputs
         self.assertEqual(decrypted_user_id, "1")

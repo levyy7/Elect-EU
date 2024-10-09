@@ -1,9 +1,17 @@
 from cryptography.fernet import Fernet
 
+
 class Vote:
-    # You should securely store the encryption key and load it from a secure place.
-    # For demonstration purposes, we're generating a key here.
-    key = Fernet.generate_key()  # This should be stored securely
+    # This is a specific type of symmetric encryption
+    # provided by the cryptography library.
+    # It uses AES in CBC mode with a SHA256 HMAC for authentication.
+    # Fernet ensures that the data is both encrypted and verified.
+    # This should be stored securely, we can use environment variables or
+    # for gitlab configuration files
+    # The best case is to use key faults like Azure or AWS or HashiCorp.
+    # Azure also uses Hardware Security modules to safely store you secrets.
+    # This is outside of the scope (too many man hours to correctly implement this)
+    key = Fernet.generate_key()
     cipher = Fernet(key)
 
     def __init__(self, user_id, vote_id):
@@ -26,4 +34,3 @@ class Vote:
         # Decrypt the data
         decrypted_data = self.cipher.decrypt(encrypted_data.encode('utf-8'))
         return decrypted_data.decode('utf-8')
-

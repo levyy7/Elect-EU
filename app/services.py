@@ -15,7 +15,7 @@ class VoteService:
     def get_all_votes():
         # Retrieve all votes from the database
         encrypted_votes = list(mongo.db.votes.find({}, {"_id": 0}))
-        
+
         # Decrypt each vote
         decrypted_votes = []
         for vote_data in encrypted_votes:
