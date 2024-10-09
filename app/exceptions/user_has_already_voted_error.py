@@ -7,4 +7,4 @@ class UserHasAlreadyVotedError(Exception):
         super().__init__(self.message)
 
     def __str__(self):
-        return f"UserAlreadyExistsError: {self.message}"
+        return f"UserHasAlreadyVotedError: {self.message}"

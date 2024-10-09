@@ -12,7 +12,7 @@ blueprint_admin = Blueprint("admin", __name__)
 @inject
 def get_users(user_service: UserService):
     try:
-        return user_service.get_all_users()
+        return jsonify(user_service.get_all_users()), 200
     except Exception:
         return jsonify({"error": "Internal Server Error"}), 500
 
@@ -29,7 +29,7 @@ def delete_user(user_service: UserService):
 
         user_service.delete_user(user_id)
 
-        return jsonify({"message": "User deleted succesfully"}), 200
+        return jsonify({"message": "User deleted succesfully."}), 200
     except MissingFieldsError as e:
         return jsonify({"error": str(e)}), 400
     except UserNotFoundError as e:
@@ -42,6 +42,6 @@ def delete_user(user_service: UserService):
 @inject
 def get_votes(vote_service: VoteService):
     try:
-        return vote_service.get_all_votes()
+        return jsonify(vote_service.get_all_votes()), 200
     except Exception:
         return jsonify({"error": "Internal Server Error"}), 500

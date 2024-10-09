@@ -54,7 +54,7 @@ def vote(vote_service: VoteService):
         if not user_id or not vote_option_id:
             raise MissingFieldsError()
 
-        return vote_service.vote_in_election(user_id, vote_option_id)
+        return jsonify({"message": "Vote submitted succesfully."}), 200
     except MissingFieldsError as e:
         return jsonify({"error": str(e)}), 400
     except UserNotFoundError as e:
