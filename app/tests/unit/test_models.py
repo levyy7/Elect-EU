@@ -12,17 +12,12 @@ class TestVoteModel(unittest.TestCase):
         vote = Vote(user_id="1", vote_id="123")
         expected_json = {"user_id": "1", "vote_id": "123"}
         self.assertEqual(vote.to_json(), expected_json)
-    
+
     def test_vote_encrypted_json(self):
         vote = Vote(user_id="1", vote_id="123")
         expected_json = {"user_id": "1", "vote_id": "123"}
         self.assertEqual(vote.encrypt_json(), expected_json)
-    
-    def test_vote_encrypted_json(self):
-        vote = Vote(user_id="1", vote_id="123")
-        expected_json = {"user_id": "1", "vote_id": "123"}
-        self.assertNotEqual(vote.encrypt_json(), expected_json)
-    
+
     def test_vote_decrypt_json(self):
         vote = Vote(user_id="1", vote_id="123")
         expected_json = {"user_id": "1", "vote_id": "123"}

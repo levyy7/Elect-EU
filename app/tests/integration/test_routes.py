@@ -25,5 +25,6 @@ class VoteAppTestCase(unittest.TestCase):
         response = self.app.get_raw("/votes")
         self.assertEqual(response.status_code, 200)
 
+
 if __name__ == "__main__":
     unittest.main()
