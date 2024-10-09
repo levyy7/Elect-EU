@@ -21,8 +21,8 @@ class VoteService:
         for vote_data in encrypted_votes:
             vote = Vote("", "")  # Create a Vote object
             decrypted_vote = {
-                "user_id": vote.decrypt_data(vote_data['user_id']),
-                "vote_id": vote.decrypt_data(vote_data['vote_id'])
+                "user_id": vote.decrypt_data(vote_data["user_id"]),
+                "vote_id": vote.decrypt_data(vote_data["vote_id"]),
             }
             decrypted_votes.append(decrypted_vote)
 
