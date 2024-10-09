@@ -1,5 +1,4 @@
 class VoteOptionNotFoundError(Exception):
-
     def __init__(self, vote_option_id):
         self.vote_option_id = vote_option_id
         self.message = f"Vote option with id {vote_option_id} does not exist."

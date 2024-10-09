@@ -3,7 +3,6 @@ from ..utils.data_loader import load_election
 
 
 class ElectionService:
-
     def __init__(self):
         pass
 
