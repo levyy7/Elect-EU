@@ -19,4 +19,7 @@ build/
 # VSCode
 .vscode/
 
+# Do not add private keys/certificates to GitLab (GitLab does not allow it anyway)
+*.pem
+*.key
 
