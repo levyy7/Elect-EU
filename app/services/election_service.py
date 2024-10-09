@@ -3,8 +3,11 @@ from ..utils.data_loader import load_election
 
 
 class ElectionService:
-    @staticmethod
-    def get_current_election():
+
+    def __init__(self):
+        pass
+
+    def get_current_election(self):
         currentElection = load_election()
 
         return currentElection.to_json()

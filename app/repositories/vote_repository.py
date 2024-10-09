@@ -1,23 +1,23 @@
-from app import mongo
+from injector import inject
 
 
 class VoteRepository:
-    @staticmethod
-    def store_vote(vote_json):
-        mongo.db.votes.insert_one(vote_json)
+    @inject
+    def __init__(self, mongo):
+        self.mongo = mongo
 
-    @staticmethod
-    def get_all_votes():
-        return list(mongo.db.votes.find({}, {"_id": 0}))
+    def store_vote(self, vote_json):
+        self.mongo.db.votes.insert_one(vote_json)
 
-    @staticmethod
-    def get_vote(user_id):
-        vote = mongo.db.votes.find_one({"user_id": user_id}, {"_id": 0})
+    def get_all_votes(self):
+        return list(self.mongo.db.votes.find({}, {"_id": 0}))
+
+    def get_vote(self, user_id):
+        vote = self.mongo.db.votes.find_one({"user_id": user_id}, {"_id": 0})
 
         return vote
 
-    @staticmethod
-    def delete_vote(user_id):
-        result = mongo.db.votes.delete_one({"user_id": user_id})
+    def delete_vote(self, user_id):
+        result = self.mongo.db.votes.delete_one({"user_id": user_id})
 
         return result

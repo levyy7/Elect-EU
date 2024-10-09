@@ -8,10 +8,15 @@ from ..exceptions.user_has_already_voted_error import UserHasAlreadyVotedError
 
 
 class VoteService:
-    @staticmethod
-    def vote_in_election(user_id, vote_option_id):
-        user = UserRepository.get_user(user_id)
-        vote = VoteRepository.get_vote(user_id)
+    def __init__(
+        self, user_repository: UserRepository, vote_repository: VoteRepository
+    ):
+        self.user_repository = user_repository
+        self.vote_repository = vote_repository
+
+    def vote_in_election(self, user_id, vote_option_id):
+        user = self.user_repository.get_user(user_id)
+        vote = self.vote_repository.get_vote(user_id)
         vote_options = load_election().to_json()["vote_options"]
 
         if not user:
@@ -23,17 +28,15 @@ class VoteService:
             raise VoteOptionNotFoundError(vote_option_id)
         if vote:
             raise UserHasAlreadyVotedError(user_id)
-        
+
         vote = {"user_id": user_id, "vote_option_id": vote_option_id}
         VoteService.store_vote(vote)
-        
-    @staticmethod
-    def get_all_votes():
-        return VoteRepository.get_all_votes()
 
-    @staticmethod
-    def get_vote(user_id):
-        vote = VoteRepository.get_vote(user_id)
+    def get_all_votes(self):
+        return self.vote_repository.get_all_votes()
+
+    def get_vote(self, user_id):
+        vote = self.vote_repository.get_vote(user_id)
 
         if not vote:
             raise VoteNotFoundError(user_id)

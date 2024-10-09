@@ -1,23 +1,23 @@
-from app import mongo
+from injector import inject
 
 
 class UserRepository:
-    @staticmethod
-    def store_user(user_json):
-        mongo.db.users.insert_one(user_json)
+    @inject
+    def __init__(self, mongo):
+        self.mongo = mongo
 
-    @staticmethod
-    def get_all_users():
-        return list(mongo.db.users.find({}, {"_id": 0}))
+    def store_user(self, user_json):
+        self.mongo.db.users.insert_one(user_json)
 
-    @staticmethod
-    def get_user(user_id):
-        user = mongo.db.users.find_one({"user_id": user_id}, {"_id": 0})
+    def get_all_users(self):
+        return list(self.mongo.db.users.find({}, {"_id": 0}))
+
+    def get_user(self, user_id):
+        user = self.mongo.db.users.find_one({"user_id": user_id}, {"_id": 0})
 
         return user
 
-    @staticmethod
-    def delete_user(user_id):
-        result = mongo.db.users.delete_one({"user_id": user_id})
+    def delete_user(self, user_id):
+        result = self.mongo.db.users.delete_one({"user_id": user_id})
 
         return result
