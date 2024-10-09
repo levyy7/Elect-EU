@@ -5,7 +5,7 @@ from app.models import Vote
 class VoteService:
     @staticmethod
     def store_vote(vote: Vote):
-        mongo.db.votes.insert_one(vote.to_json())
+        mongo.db.votes.insert_one(vote.encrypt_json())
 
     @staticmethod
     def get_all_votes_raw():

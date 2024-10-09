@@ -24,11 +24,17 @@ class Vote:
         return encrypted_data.decode("utf-8")
 
     def to_json(self):
-        # Encrypt user_id and vote_id before saving them
-        return {
-            "user_id": self.encrypt_data(self.user_id),
-            "vote_id": self.encrypt_data(self.vote_id),
+        # Convert to a simple JSON representation
+        return {"user_id": self.user_id, "vote_id": self.vote_id}
+
+    def encrypt_json(self):
+        # Convert to JSON and encrypt user_id and vote_id
+        json_data = self.to_json()
+        encrypted_json = {
+            "user_id": self.encrypt_data(json_data["user_id"]),
+            "vote_id": self.encrypt_data(json_data["vote_id"]),
         }
+        return encrypted_json
 
     def decrypt_data(self, encrypted_data):
         # Decrypt the data
