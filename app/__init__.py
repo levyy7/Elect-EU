@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_pymongo import PyMongo
+from app.schemas import user_schema, vote_option_schema, election_schema, vote_schema
 from flask_injector import FlaskInjector
 from injector import Binder, singleton
 from app.services.user_service import UserService
@@ -11,8 +12,12 @@ from app.repositories.vote_repository import VoteRepository
 # Initialize the app
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://mongo:27017/votes_db"
-mongo = PyMongo(app)
 
+mongo = PyMongo(app)
+mongo.create_collection("users", validator=user_schema)
+mongo.create_collection("vote_options", validator=vote_option_schema)
+mongo.create_collection("elections", validator=election_schema)
+mongo.create_collection("votes", validator=vote_schema)
 
 def configure(binder: Binder):
     binder.bind(UserService, to=UserService(UserRepository(mongo)), scope=singleton)
