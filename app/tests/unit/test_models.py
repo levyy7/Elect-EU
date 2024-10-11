@@ -43,23 +43,6 @@ class TestAdminModel(unittest.TestCase):
 
 
 class TestVoteOptionModel(unittest.TestCase):
-    def test_vote_option_to_json(self):
-        vote_option = VoteOption(
-            vote_option_id=1,
-            party_name="Party A",
-            candidates=["Candidate A", "Candidate B"],
-            photo="party_a.png",
-        )
-        expected_json = {
-            "vote_option_id": 1,
-            "party_name": "Party A",
-            "candidates": ["Candidate A", "Candidate B"],
-            "photo": "party_a.png",
-        }
-        self.assertEqual(vote_option.to_json(), expected_json)
-
-
-class TestVoteOptionModel(unittest.TestCase):
     def test_create_vote_option(self):
         vote_option = VoteOption(
             vote_option_id="1",
