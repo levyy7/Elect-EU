@@ -4,6 +4,7 @@ from ..models import Election, VoteOption
 
 
 def load_election():
+
     json_file_path = os.path.join(
         os.path.dirname(__file__), "..", "data", "election.json"
     )
@@ -18,5 +19,6 @@ def load_election():
         )
         for vo in data["vote_options"]
     ]
+    election_id = data["election_id"]
 
-    return Election(dateISO, vote_options)
+    return Election(election_id, dateISO, vote_options)

@@ -28,12 +28,11 @@ def get_election(election_service: ElectionService):
 def register_citizen(user_service: UserService):
     try:
         data = request.get_json()
-        user_id = data.get("user_id")
 
-        if not user_id:
+        if not data.get("BSN") or not data.get("password"):
             raise MissingFieldsError()
 
-        user_service.create_user(user_id)
+        user_service.create_user(data)
 
         return jsonify({"message": "Citizen created succesfully"}), 200
     except MissingFieldsError as e:
@@ -50,13 +49,12 @@ def register_citizen(user_service: UserService):
 def vote(vote_service: VoteService):
     try:
         data = request.get_json()
-        user_id = data.get("user_id")
-        vote_option_id = data.get("vote_option_id")
+        bsn, vote_option_id = data.get("BSN"), data.get("vote_option_id")
 
-        if not user_id or not vote_option_id:
+        if not bsn or not vote_option_id:
             raise MissingFieldsError()
 
-        vote_service.vote_in_election(user_id, vote_option_id)
+        vote_service.vote_in_election(bsn, vote_option_id)
 
         return jsonify({"message": "Vote submitted succesfully."}), 200
     except MissingFieldsError as e:
@@ -70,3 +68,4 @@ def vote(vote_service: VoteService):
     except Exception as e:
         msg = "Internal Server Error: " + str(e)
         return jsonify({"error": msg}), 500
+
