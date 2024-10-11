@@ -23,12 +23,12 @@ def get_users(user_service: UserService):
 def delete_user(user_service: UserService):
     try:
         data = request.get_json()
-        bsn = data.get("BSN")
+        user_id = data.get("user_id")
 
-        if not bsn:
+        if not user_id:
             raise MissingFieldsError()
 
-        user_service.delete_user(bsn)
+        user_service.delete_user(user_id)
 
         return jsonify({"message": "User deleted succesfully."}), 200
     except MissingFieldsError as e:

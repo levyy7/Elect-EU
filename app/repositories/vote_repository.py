@@ -13,12 +13,12 @@ class VoteRepository:
     def get_all_votes(self):
         return list(self.votes_table.find({}, {"_id": 0}))
 
-    def get_vote_by_voter_id(self, bsn):
-        vote = self.votes_table.find_one({"BSN": bsn}, {"_id": 0})
+    def get_vote_by_voter_id(self, user_id):
+        vote = self.votes_table.find_one({"user_id": user_id}, {"_id": 0})
 
         return vote
 
-    def delete_vote(self, bsn):
-        result = self.votes_table.delete_one({"BSN": bsn})
+    def delete_vote(self, user_id):
+        result = self.votes_table.delete_one({"user_id": user_id})
 
         return result

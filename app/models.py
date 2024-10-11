@@ -4,10 +4,10 @@ from abc import ABC, abstractmethod
 
 
 class User(ABC):
-    def __init__(self, email, password, bsn=None):
+    def __init__(self,  user_id, email, password):
+        self.user_id = user_id
         self.email = email
         self.password = password
-        self.bsn = bsn
 
     @abstractmethod
     def to_json(self):
@@ -20,7 +20,7 @@ class Admin(User):
             "email": self.email,
             "password": self.password,
             "admin_rights": True,
-            "BSN": self.bsn,
+            "user_id": self.user_id,
         }
 
 
@@ -30,7 +30,7 @@ class Citizen(User):
             "email": self.email,
             "password": self.password,
             "admin_rights": False,
-            "BSN": self.bsn,
+            "user_id": self.user_id,
         }
 
 

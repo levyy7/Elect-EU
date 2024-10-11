@@ -29,7 +29,7 @@ def register_citizen(user_service: UserService):
     try:
         data = request.get_json()
 
-        if not data.get("BSN") or not data.get("password"):
+        if not data.get("user_id") or not data.get("password"):
             raise MissingFieldsError()
 
         user_service.create_user(data)
@@ -49,12 +49,12 @@ def register_citizen(user_service: UserService):
 def vote(vote_service: VoteService):
     try:
         data = request.get_json()
-        bsn, vote_option_id = data.get("BSN"), data.get("vote_option_id")
+        user_id, vote_option_id = data.get("user_id"), data.get("vote_option_id")
 
-        if not bsn or not vote_option_id:
+        if not user_id or not vote_option_id:
             raise MissingFieldsError()
 
-        vote_service.vote_in_election(bsn, vote_option_id)
+        vote_service.vote_in_election(user_id, vote_option_id)
 
         return jsonify({"message": "Vote submitted succesfully."}), 200
     except MissingFieldsError as e:

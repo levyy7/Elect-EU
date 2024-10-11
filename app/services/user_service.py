@@ -10,30 +10,30 @@ class UserService:
 
     def create_user(self, data, admin_rights=False):
         all_users = self.user_repository.get_all_users()
-        email, password, bsn = data.get("email"), data.get("password"), data.get("BSN")
+        email, password, user_id = data.get("email"), data.get("password"), data.get("user_id")
 
-        if any(user.get("BSN") == bsn for user in all_users):
-            raise UserAlreadyExistsError(bsn)
+        if any(user.get("user_id") == user_id for user in all_users):
+            raise UserAlreadyExistsError(user_id)
 
         if admin_rights:
-            user = Admin(email, password, bsn)
+            user = Admin(user_id, email, password)
         else:
-            user = Citizen(email, password, bsn)
+            user = Citizen(user_id, email, password)
         self.user_repository.store_user(user.to_json())
 
     def get_all_users(self):
         return self.user_repository.get_all_users()
 
-    def get_user(self, bsn):
-        user = self.user_repository.get_user(bsn)
+    def get_user(self, user_id):
+        user = self.user_repository.get_user(user_id)
 
         if not user:
-            raise UserNotFoundError(bsn)
+            raise UserNotFoundError(user_id)
 
         return user
 
-    def delete_user(self, bsn):
-        result = self.user_repository.delete_user(bsn)
+    def delete_user(self, user_id):
+        result = self.user_repository.delete_user(user_id)
 
         if result == 0:
-            raise UserNotFoundError(bsn)
+            raise UserNotFoundError(user_id)

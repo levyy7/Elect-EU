@@ -2,9 +2,9 @@
 user_schema = {
     "$jsonSchema": {
         "bsonType": "object",
-        "required": ["BSN", "email", "password", "admin_rights"],
+        "required": ["user_id", "password", "admin_rights"],
         "properties": {
-            "BSN": {"bsonType": "int"},
+            "user_id": {"bsonType": "int"},
             "email": {
                 "bsonType": "string",
                 "description": "must be a string and is required",
@@ -25,11 +25,11 @@ user_schema = {
 votes_schema = {
     "$jsonSchema": {
         "bsonType": "object",
-        "required": ["BSN", "vote_option_id"],
+        "required": ["user_id", "vote_option_id"],
         "properties": {
-            "BSN": {
+            "user_id": {
                 "bsonType": "int",
-                "description": "BSN of the user casting the vote",
+                "description": "user_id of the user casting the vote",
             },
             "vote_option_id": {
                 "bsonType": "int",
