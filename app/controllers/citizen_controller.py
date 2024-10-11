@@ -68,4 +68,3 @@ def vote(vote_service: VoteService):
     except Exception as e:
         msg = "Internal Server Error: " + str(e)
         return jsonify({"error": msg}), 500
-

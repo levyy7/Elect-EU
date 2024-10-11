@@ -4,7 +4,6 @@ from ..models import Election, VoteOption
 
 
 def load_election():
-
     json_file_path = os.path.join(
         os.path.dirname(__file__), "..", "data", "election.json"
     )

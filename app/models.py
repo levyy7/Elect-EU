@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 
 
 class User(ABC):
-    def __init__(self,  user_id, email, password):
+    def __init__(self, user_id, email, password):
         self.user_id = user_id
         self.email = email
         self.password = password
@@ -57,9 +57,7 @@ class Election:
         self.vote_options = vote_options
 
     def to_json(self):
-        vote_options_json = [
-            vote_option.to_json() for vote_option in self.vote_options
-        ]
+        vote_options_json = [vote_option.to_json() for vote_option in self.vote_options]
         return {
             "election_id": self.id,
             "date": self.dateISO,
