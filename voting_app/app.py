@@ -1,4 +1,4 @@
-from voting_app import app
+from app import app
 import os
 
 cert_file = "/certs/localhost+2.pem"

@@ -2,12 +2,12 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_injector import FlaskInjector
 from injector import Binder, singleton
-from voting_app.services.user_service import UserService
-from voting_app.services.vote_service import VoteService
-from voting_app.services.election_service import ElectionService
-from voting_app.repositories.user_repository import UserRepository
-from voting_app.repositories.vote_repository import VoteRepository
-from voting_app.schemas import (
+from .services.user_service import UserService
+from .services.vote_service import VoteService
+from .services.election_service import ElectionService
+from .repositories.user_repository import UserRepository
+from .repositories.vote_repository import VoteRepository
+from .schemas import (
     user_schema,
     vote_option_schema,
     election_schema,
@@ -44,8 +44,8 @@ def configure(binder: Binder):
     binder.bind(ElectionService, to=ElectionService(), scope=singleton)
 
 
-from voting_app.controllers.citizen_controller import blueprint_citizen
-from voting_app.controllers.admin_controller import blueprint_admin
+from .controllers.citizen_controller import blueprint_citizen
+from .controllers.admin_controller import blueprint_admin
 
 
 def register_routes(app):
