@@ -4,6 +4,7 @@ import os
 cert_file = "/certs/localhost+2.pem"
 key_file = "/certs/localhost+2-key.pem"
 
+
 def run_app():
     # Check if the certificate and key files exist
     if os.path.exists(cert_file) and os.path.exists(key_file):

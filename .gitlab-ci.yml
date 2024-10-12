@@ -12,10 +12,10 @@ stages:
 lint:
   stage: lint
   script:
-    - docker-compose run --rm flask-app black --check .
-    - docker-compose run --rm flask-app flake8 .
-    - docker-compose run --rm microservice2 black --check .
-    - docker-compose run --rm microservice2 flake8 .
+    - docker-compose run --rm voting_app black --check .
+    - docker-compose run --rm voting_app flake8 .
+    - docker-compose run --rm authentication_service black --check .
+    - docker-compose run --rm authentication_service flake8 .
 
 build:
   stage: build
@@ -25,13 +25,13 @@ build:
 unit_tests:
   stage: unit_tests
   script:
-    - docker-compose run --rm flask-app python -m unittest discover -s microservice1/app/tests/unit
-    - docker-compose run --rm microservice2 python -m unittest discover -s microservice2/app/tests/unit
+    - docker-compose run --rm voting_app python -m unittest discover -s voting_app/app/tests/unit
+    - docker-compose run --rm authentication_service python -m unittest discover -s authentication_service/app/tests/unit
 
 integration_tests:
   stage: integration_tests
   script:
     - docker-compose up -d
-    - docker-compose exec flask-app pytest microservice1/app/tests/integration
-    - docker-compose exec microservice2 pytest microservice2/app/tests/integration
+    - docker-compose exec voting_app pytest voting_app/app/tests/integration
+    - docker-compose exec authentication_service pytest authentication_service/app/tests/integration
     - docker-compose down
