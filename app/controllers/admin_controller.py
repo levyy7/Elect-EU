@@ -18,7 +18,7 @@ def get_users(user_service: UserService):
         return jsonify({"error": msg}), 500
 
 
-@blueprint_admin.route("/user_delete", methods=["POST"])
+@blueprint_admin.route("/user", methods=["DELETE"])
 @inject
 def delete_user(user_service: UserService):
     try:

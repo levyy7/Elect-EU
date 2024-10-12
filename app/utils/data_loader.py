@@ -18,5 +18,6 @@ def load_election():
         )
         for vo in data["vote_options"]
     ]
+    election_id = data["election_id"]
 
-    return Election(dateISO, vote_options)
+    return Election(election_id, dateISO, vote_options)

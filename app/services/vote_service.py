@@ -16,7 +16,7 @@ class VoteService:
 
     def vote_in_election(self, user_id, vote_option_id):
         user = self.user_repository.get_user(user_id)
-        vote = self.vote_repository.get_vote(user_id)
+        vote = self.vote_repository.get_vote_by_voter_id(user_id)
         vote_options = load_election().to_json()["vote_options"]
 
         if not user:
@@ -36,7 +36,7 @@ class VoteService:
         return self.vote_repository.get_all_votes()
 
     def get_vote(self, user_id):
-        vote = self.vote_repository.get_vote(user_id)
+        vote = self.vote_repository.get_vote_by_voter_id(user_id)
 
         if not vote:
             raise VoteNotFoundError(user_id)

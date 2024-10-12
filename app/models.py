@@ -4,8 +4,10 @@ from abc import ABC, abstractmethod
 
 
 class User(ABC):
-    def __init__(self, user_id):
-        self.id = user_id
+    def __init__(self, user_id, email, password):
+        self.user_id = user_id
+        self.email = email
+        self.password = password
 
     @abstractmethod
     def to_json(self):
@@ -14,12 +16,22 @@ class User(ABC):
 
 class Admin(User):
     def to_json(self):
-        return {"user_id": self.id, "admin_rights": True}
+        return {
+            "email": self.email,
+            "password": self.password,
+            "admin_rights": True,
+            "user_id": self.user_id,
+        }
 
 
 class Citizen(User):
     def to_json(self):
-        return {"user_id": self.id, "admin_rights": False}
+        return {
+            "email": self.email,
+            "password": self.password,
+            "admin_rights": False,
+            "user_id": self.user_id,
+        }
 
 
 class VoteOption:
@@ -39,10 +51,15 @@ class VoteOption:
 
 
 class Election:
-    def __init__(self, dateISO, vote_options):
+    def __init__(self, election_id, dateISO, vote_options):
+        self.id = election_id
         self.dateISO = dateISO
         self.vote_options = vote_options
 
     def to_json(self):
         vote_options_json = [vote_option.to_json() for vote_option in self.vote_options]
-        return {"dateISO": self.dateISO, "vote_options": vote_options_json}
+        return {
+            "election_id": self.id,
+            "date": self.dateISO,
+            "vote_options": vote_options_json,
+        }

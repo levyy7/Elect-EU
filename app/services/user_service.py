@@ -8,16 +8,21 @@ class UserService:
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
-    def create_user(self, user_id, admin_rights=False):
+    def create_user(self, data, admin_rights=False):
         all_users = self.user_repository.get_all_users()
+        email, password, user_id = (
+            data.get("email"),
+            data.get("password"),
+            data.get("user_id"),
+        )
 
         if any(user.get("user_id") == user_id for user in all_users):
             raise UserAlreadyExistsError(user_id)
 
         if admin_rights:
-            user = Admin(user_id)
+            user = Admin(user_id, email, password)
         else:
-            user = Citizen(user_id)
+            user = Citizen(user_id, email, password)
         self.user_repository.store_user(user.to_json())
 
     def get_all_users(self):

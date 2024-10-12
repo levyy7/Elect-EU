@@ -8,5 +8,7 @@ class ElectionService:
 
     def get_current_election(self):
         currentElection = load_election()
+        print("after load: ")
+        print(currentElection)
 
         return currentElection.to_json()
