@@ -25,8 +25,8 @@ build:
 unit_tests:
   stage: unit_tests
   script:
-    - docker-compose run --rm voting_app python -m unittest discover -s voting_app/app/tests/unit
-    - docker-compose run --rm authentication_service python -m unittest discover -s authentication_service/app/tests/unit
+    - docker-compose run --rm voting_app python -m unittest discover -s voting_app/tests/unit
+    - docker-compose run --rm authentication_service python -m unittest discover -s authentication_service/tests/unit
 
 integration_tests:
   stage: integration_tests
