@@ -12,7 +12,8 @@ def register():
     # Generate and send the initial code for 2FA setup
     try:
         secret = generate_2fa(email)
-        return jsonify({'message': 'Registration successful, scan the QR code in Google Authenticator', 'secret': secret}), 201
+        return jsonify({'message': 'Registration successful, \
+                                    scan the QR code in Google Authenticator', 'secret': secret}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
