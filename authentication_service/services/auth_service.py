@@ -5,8 +5,10 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
-from repositories.user_repository import save_secret_for_user, get_user_by_email
-
+import sys
+sys.path.append("..")
+from ...authentication_service import db
+from flask import Blueprint, request, jsonify
 
 def send_email_with_qr_code(email, qr_code_path):
     # Email credentials
@@ -47,7 +49,8 @@ def generate_2fa(email):
 
     # Generate a unique secret for the user
     secret = pyotp.random_base32()
-    save_secret_for_user(email, secret)
+    
+    db.users.update_one({"email": email}, {"$set": {"authentication_token": secret}})
 
     # Generate a QR code for Google Authenticator
     totp = pyotp.TOTP(secret)
@@ -74,13 +77,22 @@ def generate_2fa(email):
 
 
 def verify_2fa(email, code):
-    user = get_user_by_email(email)
+    # Search for the user in the 'users' collection by email
+    user = db.users.find_one({"email": email})
+
     if not user:
-        raise Exception("User not found")
+        return jsonify({"error": "User not found"}), 404
 
-    secret = user.get("2fa_secret")
-    if secret is None:
-        raise Exception("2FA secret not found for this user.")
+    # Access the authentication token from the user's record
+    authentication_token = user.get("authentication_token")
+    if authentication_token is None:
+        return jsonify({"error": "Authentication token not found for this user."}), 400
 
-    totp = pyotp.TOTP(secret)
-    return totp.verify(code)
+    # Use the authentication token to verify the 2FA code
+    totp = pyotp.TOTP(authentication_token)
+    if totp.verify(code):
+        return jsonify({"message": "2FA verification successful"}), 200
+    else:
+        return jsonify({"error": "Invalid 2FA code"}), 400
+
+

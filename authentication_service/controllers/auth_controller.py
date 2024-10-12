@@ -1,15 +1,27 @@
 from flask import Blueprint, request, jsonify
 from services.auth_service import generate_2fa, verify_2fa
+import sys
+sys.path.append("..")
+from ...authentication_service import db
 
 auth_blueprint = Blueprint("auth", __name__)
 
+def check_user_credentials(email, password):
+    # Search for the user in the 'users' collection by email
+    user = db.users.find_one({"email": email})
+    return user and user["password"] == password
 
 @auth_blueprint.route("/register", methods=["POST"])
 def register():
     email = request.json.get("email")
-    if not email:
-        return jsonify({"error": "Email is required"}), 400
+    password = request.json.get("password")
+    
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
 
+    if not check_user_credentials(email, password): 
+        return jsonify({"error": "Invalid email or password"}), 401
+    
     # Generate and send the initial code for 2FA setup
     try:
         secret = generate_2fa(email)
