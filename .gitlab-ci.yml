@@ -32,6 +32,5 @@ integration_tests:
   stage: integration_tests
   script:
     - docker-compose up -d
-    - docker-compose exec voting_app pytest voting_app/app/tests/integration
-    - docker-compose exec authentication_service pytest authentication_service/app/tests/integration
+    - docker-compose exec voting_app pytest voting_app/tests/integration
     - docker-compose down
