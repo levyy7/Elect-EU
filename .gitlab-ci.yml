@@ -7,13 +7,15 @@ stages:
   - build
   - unit_tests
   - integration_tests
-# Linting stage (Check for proper formatting and checktyle rules)
 
+# Linting stage (Check for proper formatting and checkstyle rules)
 lint:
   stage: lint
   script:
     - docker-compose run --rm flask-app black --check .
     - docker-compose run --rm flask-app flake8 .
+    - docker-compose run --rm microservice2 black --check .
+    - docker-compose run --rm microservice2 flake8 .
 
 build:
   stage: build
@@ -23,13 +25,13 @@ build:
 unit_tests:
   stage: unit_tests
   script:
-    - docker-compose run --rm flask-app python -m unittest discover -s app/tests/unit
-# discover command: This is a unittest sub-command that automatically discovers and runs tests in
-# the specified directory. It looks for test files matching the pattern test*.py by default.
+    - docker-compose run --rm flask-app python -m unittest discover -s microservice1/app/tests/unit
+    - docker-compose run --rm microservice2 python -m unittest discover -s microservice2/app/tests/unit
 
 integration_tests:
   stage: integration_tests
   script:
     - docker-compose up -d
-    - docker-compose exec flask-app pytest app/tests/integration
+    - docker-compose exec flask-app pytest microservice1/app/tests/integration
+    - docker-compose exec microservice2 pytest microservice2/app/tests/integration
     - docker-compose down

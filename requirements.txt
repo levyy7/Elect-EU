@@ -1,9 +1,0 @@
-Flask==2.3.2
-Flask-PyMongo==2.3.0
-Flask-Injector==0.15.0
-injector==0.22.0
-pymongo==4.3.3
-pytest==7.1.2
-black==23.1.0
-flake8==6.0.0
-pyopenssl

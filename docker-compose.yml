@@ -5,19 +5,31 @@ services:
     container_name: mongo
     ports:
       - "27017:27017"
-#    volumes:
-#      - mongo_data:/data/db  # Add this line to persist data
-  flask-app:
-    build: .
+    volumes:
+      - mongo_data:/data/db  # Persist MongoDB data
+
+  flask-app:  # This is microservice1
+    build: ./microservice1
     command: python app.py
     volumes:
-      - .:/usr/src/app
+      - ./microservice1:/usr/src/app
       - ./certs:/certs
     ports:
       - "5000:5000"
     depends_on:
       - mongo
 
-## Define the volume at the bottom
-#volumes:
-#  mongo_data:
+  microservice2:  # This is the new microservice2 for 2FA
+    build: ./microservice2
+    command: python app.py
+    volumes:
+      - ./microservice2:/usr/src/app
+      - ./certs:/certs
+    ports:
+      - "5001:5000"  # Expose on a different host port to avoid conflict
+    depends_on:
+      - mongo
+
+# Define the volume for MongoDB data persistence
+volumes:
+  mongo_data:
