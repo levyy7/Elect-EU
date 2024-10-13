@@ -3,9 +3,9 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_injector import FlaskInjector
 from injector import Binder, singleton
-from .services.election_service import ElectionService
+from .services.authentication_service import AuthenticationService
+from .repositories.authentication_repository import AuthenticationRepository
 from .schemas import user_secrets_schema
-from .controllers.admin_controller import blueprint_admin
 from .controllers.authentication_controller import blueprint_authentication
 
 cert_file = "/certs/localhost+2.pem"
@@ -23,13 +23,13 @@ if "user_secrets" not in db.list_collection_names():
 
 
 def configure(binder: Binder):
-    binder.bind(ElectionService, to=ElectionService(), scope=singleton)
-
+    binder.bind(
+        AuthenticationService,
+        to=AuthenticationService(AuthenticationRepository(mongo)),
+        scope=singleton,
+    )
 
 def register_routes(app):
-    # Register all your blueprints here
-    # app.register_blueprint(blueprint_citizen, url_prefix="")
-    app.register_blueprint(blueprint_admin, url_prefix="")
     app.register_blueprint(blueprint_authentication, url_prefix="")
 
 
