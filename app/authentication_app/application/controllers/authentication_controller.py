@@ -1,0 +1,65 @@
+from flask import Blueprint, request, jsonify
+from flask_injector import inject
+from ..services.authentication_service import AuthenticationService
+
+blueprint_authentication = Blueprint("authentication", __name__)
+
+
+@blueprint_authentication.route("/register", methods=["POST"])
+@inject
+def register(authentication_service: AuthenticationService):
+    email = request.json.get("email")
+    password = request.json.get("password")
+
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
+
+    if not authentication_service.check_credentials(email, password):
+        return jsonify({"error": "Invalid email or password"}), 401
+
+    # Generate and send the initial code for 2FA setup
+    try:
+        secret = authentication_service.generate_2fa(email)
+        return (
+            jsonify(
+                {
+                    "message": "Registration successful, \
+                                    scan the QR code in Google \
+                                    Authenticator",
+                    "secret": secret,
+                }
+            ),
+            201,
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@blueprint_authentication.route("/user_secrets", methods=["GET"])
+@inject
+def get_all_user_secrets(authentication_service: AuthenticationService):
+    try:
+        user_secrets = authentication_service.get_all_user_secrets()
+        return jsonify(user_secrets), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@blueprint_authentication.route("/verify-2fa", methods=["POST"])
+@inject
+def verify(authentication_service: AuthenticationService):
+    email = request.json.get("email")
+    code = request.json.get("code")
+
+    if not email or not code:
+        return jsonify({"error": "Email and 2FA code are required"}), 400
+
+    # Verify the 2FA code
+    try:
+        is_valid = authentication_service.verify_2fa(email, code)
+        if is_valid:
+            return jsonify({"message": "2FA verification successful"}), 200
+        else:
+            return jsonify({"error": "Invalid 2FA code"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

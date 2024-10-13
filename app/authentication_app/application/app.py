@@ -5,19 +5,17 @@ from flask_injector import FlaskInjector
 from injector import Binder, singleton
 from .services.user_service import UserService
 from .services.vote_service import VoteService
+from .services.authentication_service import AuthenticationService
+from .repositories.authentication_repository import AuthenticationRepository
 from .services.election_service import ElectionService
 from .repositories.user_repository import UserRepository
 from .repositories.vote_repository import VoteRepository
 from .schemas import (
-    user_schema,
-    vote_option_schema,
-    election_schema,
-    votes_schema,
-    candidates_schema,
+    user_secrets_schema
 )
-from .controllers.citizen_controller import blueprint_citizen
+# from .controllers.citizen_controller import blueprint_citizen
 from .controllers.admin_controller import blueprint_admin
-
+from .controllers.authentication_controller import blueprint_authentication
 
 cert_file = "/certs/localhost+2.pem"
 key_file = "/certs/localhost+2-key.pem"
@@ -29,16 +27,8 @@ app.config["MONGO_URI"] = "mongodb://mongo:27017/votes_db"
 mongo = PyMongo(app)
 
 db = mongo.cx.votes_db
-if "users" not in db.list_collection_names():
-    db.create_collection("users", validator=user_schema)
-if "vote_options" not in db.list_collection_names():
-    db.create_collection("vote_options", validator=vote_option_schema)
-if "candidates" not in db.list_collection_names():
-    db.create_collection("candidates", validator=candidates_schema)
-if "elections" not in db.list_collection_names():
-    db.create_collection("elections", validator=election_schema)
-if "votes" not in db.list_collection_names():
-    db.create_collection("votes", validator=votes_schema)
+if "user_secrets" not in db.list_collection_names():
+    db.create_collection("user_secrets", validator=user_secrets_schema)
 
 
 def configure(binder: Binder):
@@ -48,13 +38,15 @@ def configure(binder: Binder):
         to=VoteService(UserRepository(mongo), VoteRepository(mongo)),
         scope=singleton,
     )
+    binder.bind(AuthenticationService, to=AuthenticationService(AuthenticationRepository(mongo)), scope=singleton)
     binder.bind(ElectionService, to=ElectionService(), scope=singleton)
 
 
 def register_routes(app):
     # Register all your blueprints here
-    app.register_blueprint(blueprint_citizen, url_prefix="")
+    # app.register_blueprint(blueprint_citizen, url_prefix="")
     app.register_blueprint(blueprint_admin, url_prefix="")
+    app.register_blueprint(blueprint_authentication, url_prefix="")
 
 
 register_routes(app)
