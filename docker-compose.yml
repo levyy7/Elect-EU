@@ -17,12 +17,12 @@ services:
     depends_on:
       - mongo
 
-  voting_app_2:
-    build: ./app/voting_app_2
-    container_name: voting_app_2
+  authentication_app:
+    build: app/authentication_app
+    container_name: authentication_app
     command: python -m application.app
     volumes:
-      - ./app/voting_app_2:/usr/src/app
+      - ./app/authentication_app:/usr/src/app
       - ./certs:/certs
     ports:
       - "5001:5001"
