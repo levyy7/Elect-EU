@@ -3,16 +3,8 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_injector import FlaskInjector
 from injector import Binder, singleton
-from .services.user_service import UserService
-from .services.vote_service import VoteService
-from .services.authentication_service import AuthenticationService
-from .repositories.authentication_repository import AuthenticationRepository
 from .services.election_service import ElectionService
-from .repositories.user_repository import UserRepository
-from .repositories.vote_repository import VoteRepository
 from .schemas import user_secrets_schema
-
-# from .controllers.citizen_controller import blueprint_citizen
 from .controllers.admin_controller import blueprint_admin
 from .controllers.authentication_controller import blueprint_authentication
 
@@ -31,17 +23,6 @@ if "user_secrets" not in db.list_collection_names():
 
 
 def configure(binder: Binder):
-    binder.bind(UserService, to=UserService(UserRepository(mongo)), scope=singleton)
-    binder.bind(
-        VoteService,
-        to=VoteService(UserRepository(mongo), VoteRepository(mongo)),
-        scope=singleton,
-    )
-    binder.bind(
-        AuthenticationService,
-        to=AuthenticationService(AuthenticationRepository(mongo)),
-        scope=singleton,
-    )
     binder.bind(ElectionService, to=ElectionService(), scope=singleton)
 
 
