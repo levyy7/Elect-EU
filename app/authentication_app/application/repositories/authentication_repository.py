@@ -43,7 +43,7 @@ class AuthenticationRepository:
         user = self.get_user_by_email(email)
 
         # If user is found, compare the provided password with the stored password
-        if user and user['password'] == password:
+        if user and user["password"] == password:
             return True  # The user exists and the password matches
         return False  # User not found or password doesn't match
 
@@ -56,10 +56,10 @@ class AuthenticationRepository:
                 "$set": {
                     "user_id": user_id,
                     "authentication_token": authentication_token,
-                    "bearer_token": ""  # Set bearer token to None for new users
+                    "bearer_token": "",  # Set bearer token to None for new users
                 }
             },
-            upsert=True  # Insert the document if it doesn't exist
+            upsert=True,  # Insert the document if it doesn't exist
         )
 
     def get_all_user_secrets(self):
@@ -70,7 +70,6 @@ class AuthenticationRepository:
         return self.users_table.find_one({"email": email}, {"_id": 0})
 
     def get_user_secrets(self, email):
-        """Retrieve the secrets (authentication_token, bearer_token) for a user by email."""
         # Get the user_id associated with the given email
         user = self.get_user_by_email(email)
 
@@ -80,7 +79,9 @@ class AuthenticationRepository:
         user_id = user.get("user_id")
 
         # Find the user's secrets based on the user_id
-        user_secrets = self.user_secrets_table.find_one({"user_id": user_id}, {"_id": 0})
+        user_secrets = self.user_secrets_table.find_one(
+            {"user_id": user_id}, {"_id": 0}
+        )
 
         if not user_secrets:
             raise ValueError(f"No secrets found for user with email {email}")

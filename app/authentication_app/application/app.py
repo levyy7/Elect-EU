@@ -10,9 +10,8 @@ from .repositories.authentication_repository import AuthenticationRepository
 from .services.election_service import ElectionService
 from .repositories.user_repository import UserRepository
 from .repositories.vote_repository import VoteRepository
-from .schemas import (
-    user_secrets_schema
-)
+from .schemas import user_secrets_schema
+
 # from .controllers.citizen_controller import blueprint_citizen
 from .controllers.admin_controller import blueprint_admin
 from .controllers.authentication_controller import blueprint_authentication
@@ -38,7 +37,11 @@ def configure(binder: Binder):
         to=VoteService(UserRepository(mongo), VoteRepository(mongo)),
         scope=singleton,
     )
-    binder.bind(AuthenticationService, to=AuthenticationService(AuthenticationRepository(mongo)), scope=singleton)
+    binder.bind(
+        AuthenticationService,
+        to=AuthenticationService(AuthenticationRepository(mongo)),
+        scope=singleton,
+    )
     binder.bind(ElectionService, to=ElectionService(), scope=singleton)
 
 

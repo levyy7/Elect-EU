@@ -5,9 +5,10 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
-from flask import Blueprint, request, jsonify
+from flask import jsonify
 from flask_injector import inject
 from .token_service import TokenService
+
 
 def send_email_with_qr_code(email, qr_code_path):
     # Email credentials
@@ -49,7 +50,7 @@ def generate_2fa(token_service: TokenService, email):
 
     # Generate a unique secret for the user
     secret = pyotp.random_base32()
-    
+
     token_service.store_token(email, secret)
 
     # Generate a QR code for Google Authenticator
@@ -94,5 +95,3 @@ def verify_2fa(token_service: TokenService, email, code):
         return jsonify({"message": "2FA verification successful"}), 200
     else:
         return jsonify({"error": "Invalid 2FA code"}), 400
-
-
