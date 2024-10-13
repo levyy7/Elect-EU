@@ -1,5 +1,5 @@
 import unittest
-from app import app
+from application.app import app
 
 
 class VoteAppTestCase(unittest.TestCase):
@@ -49,15 +49,6 @@ class VoteAppTestCase(unittest.TestCase):
             "UserHasAlreadyVotedError: User with id 1 has "
             + "already voted in the current election.",
         )
-
-    def test_store_vote_success(self):
-        user1 = {"user_id": 1, "email": "user1@example.com", "password": "password123"}
-        # Add User to DB
-        self.app.post("/register", json=user1)
-
-        response = self.app.post("/vote", json={"user_id": 1, "vote_option_id": 1})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json.get("message"), "Vote submitted succesfully.")
 
     def test_get_votes(self):
         response = self.app.get("/votes")

@@ -5,16 +5,27 @@ services:
     container_name: mongo
     ports:
       - "27017:27017"
-#    volumes:
-#      - mongo_data:/data/db  # Add this line to persist data
-  flask-app:
-    build: .
-    command: python app.py
+  voting_app:
+    build: ./app/voting_app
+    container_name: voting_app
+    command: python -m application.app
     volumes:
-      - .:/usr/src/app
+      - ./app/voting_app:/usr/src/app
       - ./certs:/certs
     ports:
       - "5000:5000"
+    depends_on:
+      - mongo
+
+  voting_app_2:
+    build: ./app/voting_app_2
+    container_name: voting_app_2
+    command: python -m application.app
+    volumes:
+      - ./app/voting_app_2:/usr/src/app
+      - ./certs:/certs
+    ports:
+      - "5001:5001"
     depends_on:
       - mongo
 
