@@ -29,6 +29,7 @@ def configure(binder: Binder):
         scope=singleton,
     )
 
+
 def register_routes(app):
     app.register_blueprint(blueprint_authentication, url_prefix="")
 
