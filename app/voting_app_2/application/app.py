@@ -19,8 +19,8 @@ from .controllers.citizen_controller import blueprint_citizen
 from .controllers.admin_controller import blueprint_admin
 
 
-cert_file = "../certs/localhost+2.pem"
-key_file = "../certs/localhost+2-key.pem"
+cert_file = "/certs/localhost+2.pem"
+key_file = "/certs/localhost+2-key.pem"
 
 # Initialize the app
 app = Flask(__name__)
