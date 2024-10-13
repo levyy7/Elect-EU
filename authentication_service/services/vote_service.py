@@ -1,10 +1,10 @@
-from ..repositories.user_repository import UserRepository
-from ..repositories.vote_repository import VoteRepository
-from ..utils.data_loader import load_election
-from ..exceptions.vote_not_found_error import VoteNotFoundError
-from ..exceptions.user_not_found_error import UserNotFoundError
-from ..exceptions.vote_option_not_found_error import VoteOptionNotFoundError
-from ..exceptions.user_has_already_voted_error import UserHasAlreadyVotedError
+from repositories.user_repository import UserRepository
+from repositories.vote_repository import VoteRepository
+from utils.data_loader import load_election
+from exceptions.vote_not_found_error import VoteNotFoundError
+from exceptions.user_not_found_error import UserNotFoundError
+from exceptions.vote_option_not_found_error import VoteOptionNotFoundError
+from exceptions.user_has_already_voted_error import UserHasAlreadyVotedError
 
 
 class VoteService:

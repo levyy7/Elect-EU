@@ -1,109 +1,22 @@
-# User Collection with Validation
-user_schema = {
+# Token Collection with Validation
+token_schema = {
     "$jsonSchema": {
         "bsonType": "object",
-        "required": ["user_id", "password", "admin_rights"],
+        "required": ["email"],
         "properties": {
-            "user_id": {"bsonType": "int"},
             "email": {
                 "bsonType": "string",
-                "description": "must be a string and is required",
-            },
-            "password": {
-                "bsonType": "string",
-                "description": "must be a string and is required",
-            },
-            "admin_rights": {
-                "bsonType": "bool",
-                "description": "must be a boolean and is required",
+                "description": "Email of the user associated with this token",
             },
             "authentication_token": {
                 "bsonType": "string",
-                "description": "optional authentication token for the user",
+                "description": "Authentication token for 2FA",
             },
             "bearer_token": {
                 "bsonType": "string",
-                "description": "optional bearer token for authentication",
+                "description": "Bearer token for API authentication",
             },
         },
     }
 }
 
-
-# Vote Collection with Validation
-votes_schema = {
-    "$jsonSchema": {
-        "bsonType": "object",
-        "required": ["user_id", "vote_option_id"],
-        "properties": {
-            "user_id": {
-                "bsonType": "int",
-                "description": "user_id of the user casting the vote",
-            },
-            "vote_option_id": {
-                "bsonType": "int",
-                "description": "ID of the selected vote option",
-            },
-        },
-    }
-}
-
-# Vote Options Collection with Validation
-vote_option_schema = {
-    "$jsonSchema": {
-        "bsonType": "object",
-        "required": ["vote_option_id", "election_id", "party_name"],
-        "properties": {
-            "vote_option_id": {
-                "bsonType": "int",
-                "description": "Auto-incremented ID for the vote option",
-            },
-            "election_id": {
-                "bsonType": "int",
-                "description": "ID of the election this vote option belongs to",
-            },
-            "party_name": {"bsonType": "string", "description": "Name of the party"},
-            "photo": {
-                "bsonType": "string",
-                "description": "URL or path to the party photo",
-            },
-        },
-    }
-}
-
-# Candidates Collection with Validation
-candidates_schema = {
-    "$jsonSchema": {
-        "bsonType": "object",
-        "required": ["vote_option_id", "candidate_name"],
-        "properties": {
-            "vote_option_id": {
-                "bsonType": "int",
-                "description": "Reference to the vote option",
-            },
-            "candidate_name": {
-                "bsonType": "string",
-                "description": "Name of the candidate",
-            },
-        },
-    }
-}
-
-
-# Election Collection with Validation
-election_schema = {
-    "$jsonSchema": {
-        "bsonType": "object",
-        "required": ["election_id", "election_date"],
-        "properties": {
-            "election_id": {
-                "bsonType": "int",
-                "description": "Auto-incremented ID for the election",
-            },
-            "election_date": {
-                "bsonType": "date",
-                "description": "ISO date of the election",
-            },
-        },
-    }
-}

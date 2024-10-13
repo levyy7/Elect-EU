@@ -30,3 +30,8 @@ class UserRepository:
         """Delete a user by their user_id."""
         result = self.users_table.delete_one({"user_id": user_id})
         return result
+
+    def check_credentials(self, email, password):
+        """Check if the user credentials are valid."""
+        user = self.users_table.find_one({"email": email, "password": password})
+        return user

@@ -1,5 +1,5 @@
 from controllers.auth_controller import auth_blueprint
-from app import app
+from . import app
 
 app.register_blueprint(auth_blueprint)
 

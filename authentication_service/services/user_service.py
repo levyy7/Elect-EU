@@ -1,7 +1,7 @@
-from ..models import Citizen, Admin
-from ..repositories.user_repository import UserRepository
-from ..exceptions.user_already_exists_error import UserAlreadyExistsError
-from ..exceptions.user_not_found_error import UserNotFoundError
+from models import Citizen, Admin
+from repositories.user_repository import UserRepository
+from exceptions.user_already_exists_error import UserAlreadyExistsError
+from exceptions.user_not_found_error import UserNotFoundError
 
 
 class UserService:
@@ -41,3 +41,10 @@ class UserService:
 
         if result == 0:
             raise UserNotFoundError(user_id)
+    
+    def check_user_credentials(self, email, password):
+    # Search for the user in the 'users' collection by email
+        result = self.user_repository.check_credentials(email, password)
+        if result == 0:
+            return False
+        return True

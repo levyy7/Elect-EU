@@ -5,10 +5,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
-import sys
-sys.path.append("..")
-from ...authentication_service import db
 from flask import Blueprint, request, jsonify
+from flask_injector import inject
+from .token_service import TokenService
 
 def send_email_with_qr_code(email, qr_code_path):
     # Email credentials
@@ -42,7 +41,8 @@ def send_email_with_qr_code(email, qr_code_path):
 
 
 # Generate 2FA secret and QR code
-def generate_2fa(email):
+@inject
+def generate_2fa(token_service: TokenService, email):
     # Ensure the data directory exists
     data_dir = "data"
     os.makedirs(data_dir, exist_ok=True)  # Create the directory if it doesn't exist
@@ -50,7 +50,7 @@ def generate_2fa(email):
     # Generate a unique secret for the user
     secret = pyotp.random_base32()
     
-    db.users.update_one({"email": email}, {"$set": {"authentication_token": secret}})
+    token_service.store_token(email, secret)
 
     # Generate a QR code for Google Authenticator
     totp = pyotp.TOTP(secret)
@@ -76,9 +76,9 @@ def generate_2fa(email):
     return secret
 
 
-def verify_2fa(email, code):
+def verify_2fa(token_service: TokenService, email, code):
     # Search for the user in the 'users' collection by email
-    user = db.users.find_one({"email": email})
+    user = token_service.get_token(email)
 
     if not user:
         return jsonify({"error": "User not found"}), 404

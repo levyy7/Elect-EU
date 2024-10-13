@@ -1,5 +1,5 @@
 # from ..models import Election, VoteOption
-from ..utils.data_loader import load_election
+from utils.data_loader import load_election
 
 
 class ElectionService:
