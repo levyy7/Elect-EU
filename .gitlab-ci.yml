@@ -35,5 +35,6 @@ integration_tests:
   script:
     - docker-compose up -d
     - docker-compose exec voting_app python -m pytest application/tests/integration
-    - docker-compose exec authentication_app python -m pytest application/tests/integration
+# Add back after integration tests are added
+#    - docker-compose exec authentication_app python -m pytest application/tests/integration
     - docker-compose down
