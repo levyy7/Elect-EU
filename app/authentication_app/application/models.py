@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class User(ABC):
     def __init__(self, user_id, email, password):
         self.user_id = user_id
@@ -29,4 +30,3 @@ class Citizen(User):
             "admin_rights": False,
             "user_id": self.user_id,
         }
-
