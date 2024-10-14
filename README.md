@@ -29,12 +29,13 @@ Send a `POST` request to **http://localhost:5000/register** to register a new us
 
 #### Example Request Body:
 
-````json
+```json
 {
     "user_id": 123,
     "email": "carlosarbones03@gmail.com",
     "password": "123"
 }
+```
 
 ### Step 2: Activate 2FA Authentication 🔐
 Send a `POST` request to **http://localhost:5001/register** to activate 2FA with Google Authenticator. This will send a QR code to the user’s email for scanning with the Google Authenticator app.
@@ -45,6 +46,7 @@ Send a `POST` request to **http://localhost:5001/register** to activate 2FA with
   "email": "carlosarbones03@gmail.com",
   "password": "123"
 }
+```
 
 If the email and password are correct, a QR code will be sent to the user’s email. Scan the QR code using the Google Authenticator app to get the 6-digit code.
 Here's how the app looks like:
@@ -59,6 +61,7 @@ Send a `POST` request to **http://localhost:5001/verify-2fa** to verify the 6-di
   "email": "carlosarbones03@gmail.com",
   "code": 841165
 }
+```
 
 If the code is valid, you will receive a **Bearer token** in the response. This token is needed to vote in the election.
 
@@ -68,6 +71,7 @@ If the code is valid, you will receive a **Bearer token** in the response. This 
     "message": "2FA verification successful",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjMsImVtYWlsIjoiY2FybG9zYXJib25lczAzQGdtYWlsLmNvbSIsImV4cCI6MTcyODkwMjA5N30.aMcx7R4gg7E0FlIK54evqe_j-744Ab34IgTyzl0j-vQ"
 }
+```
 
 ### Step 4: Submit Your Vote 🗳️
 Send a `POST` request to **http://localhost:5000/vote** to cast your vote. You must include the Bearer token you received from the 2FA verification step.
@@ -87,6 +91,7 @@ Here's how it looks:
     "user_id": 123,
     "vote_option_id": 2
 }
+```
 
 Once the vote is submitted successfully, you will receive a confirmation message.
 
