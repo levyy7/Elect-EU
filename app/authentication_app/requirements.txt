@@ -1,0 +1,24 @@
+Flask==2.3.2
+Flask-PyMongo==2.3.0
+Flask-Injector==0.15.0
+injector==0.22.0
+pymongo==4.3.3
+pytest==7.1.2
+black==23.1.0
+flake8==6.0.0
+pyopenssl
+PyJWT==2.8.0
+
+pyotp==2.6.0
+qrcode==7.3.1
+Werkzeug==2.3.3
+
+Pillow==9.0.1
+Flask-Mail==0.9.1  # Optional: You may prefer using Flask-Mail for email handling
+
+# For environment variable handling (optional, for configuration management)
+python-dotenv==0.19.2
+
+pytest-cov==3.0.0
+coverage==6.2
+

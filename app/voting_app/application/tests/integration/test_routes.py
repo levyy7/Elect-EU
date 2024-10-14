@@ -1,5 +1,5 @@
 import unittest
-from app import app
+from application.app import app
 
 
 class VoteAppTestCase(unittest.TestCase):

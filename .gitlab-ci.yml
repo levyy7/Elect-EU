@@ -12,8 +12,10 @@ stages:
 lint:
   stage: lint
   script:
-    - docker-compose run --rm flask-app black --check .
-    - docker-compose run --rm flask-app flake8 .
+    - docker-compose run --rm voting_app black --check .
+    - docker-compose run --rm voting_app black --check .
+    - docker-compose run --rm authentication_app black --check .
+    - docker-compose run --rm authentication_app flake8 .
 
 build:
   stage: build
@@ -23,7 +25,9 @@ build:
 unit_tests:
   stage: unit_tests
   script:
-    - docker-compose run --rm flask-app python -m unittest discover -s app/tests/unit
+    - docker-compose run --rm voting_app python -m unittest discover -s application/tests/unit
+# Add after adding unit tests for authentication
+#    - docker-compose run --rm authentication_app python -m unittest discover -s application/tests/unit
 # discover command: This is a unittest sub-command that automatically discovers and runs tests in
 # the specified directory. It looks for test files matching the pattern test*.py by default.
 
@@ -31,5 +35,7 @@ integration_tests:
   stage: integration_tests
   script:
     - docker-compose up -d
-    - docker-compose exec flask-app pytest app/tests/integration
+    - docker-compose exec voting_app python -m pytest application/tests/integration
+# Add back after integration tests are added
+#    - docker-compose exec authentication_app python -m pytest application/tests/integration
     - docker-compose down

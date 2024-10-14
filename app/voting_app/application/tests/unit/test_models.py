@@ -1,5 +1,5 @@
 import unittest
-from app.models import Citizen, Admin, VoteOption, Election
+from application.models import Citizen, Admin, VoteOption, Election
 
 
 class TestCitizenModel(unittest.TestCase):

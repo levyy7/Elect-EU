@@ -8,6 +8,8 @@ from ..exceptions.vote_option_not_found_error import VoteOptionNotFoundError
 from ..exceptions.user_has_already_voted_error import UserHasAlreadyVotedError
 from ..exceptions.user_already_exists_error import UserAlreadyExistsError
 from ..exceptions.missing_fields_error import MissingFieldsError
+from flask import request, jsonify, Blueprint
+import jwt
 
 blueprint_citizen = Blueprint("citizen", __name__)
 
@@ -47,24 +49,30 @@ def register_citizen(user_service: UserService):
 @blueprint_citizen.route("/vote", methods=["POST"])
 @inject
 def vote(vote_service: VoteService):
+    auth_header = request.headers.get("Authorization")
+
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return jsonify({"error": "Authorization token is missing or invalid"}), 401
+
+    token = auth_header.split(" ")[1]
+
     try:
+        # Verify the token
+        decoded_token = jwt.decode(token, "your_secret_key", algorithms=["HS256"])
+        user_id = decoded_token["user_id"]
+
         data = request.get_json()
-        user_id, vote_option_id = data.get("user_id"), data.get("vote_option_id")
+        vote_option_id = data.get("vote_option_id")
 
         if not user_id or not vote_option_id:
             raise MissingFieldsError()
 
         vote_service.vote_in_election(user_id, vote_option_id)
 
-        return jsonify({"message": "Vote submitted succesfully."}), 200
-    except MissingFieldsError as e:
-        return jsonify({"error": str(e)}), 400
-    except UserNotFoundError as e:
-        return jsonify({"error": str(e)}), 404
-    except VoteOptionNotFoundError as e:
-        return jsonify({"error": str(e)}), 404
-    except UserHasAlreadyVotedError as e:
-        return jsonify({"error": str(e)}), 401
+        return jsonify({"message": "Vote submitted successfully."}), 200
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Token has expired"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Invalid token"}), 401
     except Exception as e:
-        msg = "Internal Server Error: " + str(e)
-        return jsonify({"error": msg}), 500
+        return jsonify({"error": str(e)}), 500
