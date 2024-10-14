@@ -60,13 +60,25 @@ Send a `POST` request to **http://localhost:5001/register** to activate 2FA with
 }
 ```
 
-If the email and password are correct, a QR code will be sent to the user’s email. Scan the QR code using the Google Authenticator app to get the 6-digit code.
+If the registration is successful, you will receive a confirmation message:
+
+#### Example Response:
+
+```json
+{
+  "message": "Registration successful, scan the QR code in Google Authenticator",
+  "secret": "W3ZQMGCOYPUZEX34C4G2FU4DNWROADFZ"
+}
+```
+
+If the email and password are correct, a QR code will be sent to the user’s email.
+**Scan the QR code using the Google Authenticator app to get the 6-digit code.**
 
 Here's how the QR and app looks like:
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="IMG_4426.jpg" alt="QR Code" style="width: 10%;"/>
-  <img src="IMG_4427.jpg" alt="Google Authenticator App" style="width: 10%;"/>
+  <img src="IMG_4426" alt="QR Code" width="10"/>
+  <img src="IMG_4427" alt="Google Authenticator App" width="10"/>
 </div>
 
 ### Step 3: Verify 2FA Code ✅
@@ -106,7 +118,7 @@ Send a `POST` request to **http://localhost:5000/vote** to cast your vote. You m
 
 Here's how it looks:
 
-![Postman Bearer Token](https://assets.apidog.com/blog-learn/2023/11/image-26.png)
+![Postman Bearer Token](bearer_token.png)
 
 #### Example Request Body:
 
