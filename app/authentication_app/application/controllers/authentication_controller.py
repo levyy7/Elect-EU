@@ -45,7 +45,7 @@ def get_all_user_secrets(authentication_service: AuthenticationService):
         return jsonify(user_secrets), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 
 @blueprint_authentication.route("/verify-2fa", methods=["POST"])
 @inject
@@ -65,14 +65,16 @@ def verify(authentication_service: AuthenticationService):
                 {
                     "user_id": user_id,
                     "email": email,
-                    "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+                    "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1),
                 },
                 "your_secret_key",  # Replace this with your secret key
                 algorithm="HS256",
             )
-            return jsonify({"message": "2FA verification successful", "token": token}), 200
+            return (
+                jsonify({"message": "2FA verification successful", "token": token}),
+                200,
+            )
         else:
             return jsonify({"error": "Invalid 2FA code"}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-

@@ -36,7 +36,7 @@ To **run the ElectEU application**, you'll need to use **Docker Compose**. Follo
 3. **Build the Docker** images with the following command:
 
 ```bash
-   docker-compose down
+   docker-compose build
 ```
 
 4. **Start the application**:
@@ -166,14 +166,13 @@ Once the vote is submitted successfully, you will receive a confirmation message
 
 In addition to the core functionalities, ElectEU offers several additional features for managing votes and users.
 
-### Note: 
+### Note:
+
 - **Endpoints for Admins Only**: The following endpoints can only be accessed by admin users:
   - **GET /users**: Retrieve the list of registered users.
   - **DELETE /user**: Delete a user from the system.
   - **GET /votes**: Get the list of votes cast.
-  
 - **Endpoints for All Citizens**: The remaining endpoints can be accessed by all registered citizens.
-
 
 ### 1. Get Votes 🗳️
 

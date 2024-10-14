@@ -45,11 +45,12 @@ def register_citizen(user_service: UserService):
         msg = "Internal Server Error: " + str(e)
         return jsonify({"error": msg}), 500
 
+
 @blueprint_citizen.route("/vote", methods=["POST"])
 @inject
 def vote(vote_service: VoteService):
     auth_header = request.headers.get("Authorization")
-    
+
     if not auth_header or not auth_header.startswith("Bearer "):
         return jsonify({"error": "Authorization token is missing or invalid"}), 401
 
@@ -58,7 +59,7 @@ def vote(vote_service: VoteService):
     try:
         # Verify the token
         decoded_token = jwt.decode(token, "your_secret_key", algorithms=["HS256"])
-        user_id = decoded_token["user_id"] 
+        user_id = decoded_token["user_id"]
 
         data = request.get_json()
         vote_option_id = data.get("vote_option_id")
