@@ -77,8 +77,8 @@ If the email and password are correct, a QR code will be sent to the user’s em
 Here's how the QR and app looks like:
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="IMG_4426" alt="QR Code" width="10"/>
-  <img src="IMG_4427" alt="Google Authenticator App" width="10"/>
+  <img src="IMG_4426.jpg" alt="QR Code" width="10"/>
+  <img src="IMG_4427.jpg" alt="Google Authenticator App" width="10"/>
 </div>
 
 ### Step 3: Verify 2FA Code ✅
@@ -131,10 +131,19 @@ Here's how it looks:
 
 Once the vote is submitted successfully, you will receive a confirmation message.
 
+#### Example Response:
+
+```json
+{
+  "message": "Vote submitted successfully"
+}
+```
+
 ## 🎉 Congratulations! 🎉
 
 You’ve successfully registered, authenticated, and voted in ElectEU! Keep your Bearer token safe, and ensure to follow the security measures during the voting process. 🛡️
 
 ```
 
-```
+
+
