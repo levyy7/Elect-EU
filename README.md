@@ -166,6 +166,15 @@ Once the vote is submitted successfully, you will receive a confirmation message
 
 In addition to the core functionalities, ElectEU offers several additional features for managing votes and users.
 
+### Note: 
+- **Endpoints for Admins Only**: The following endpoints can only be accessed by admin users:
+  - **GET /users**: Retrieve the list of registered users.
+  - **DELETE /user**: Delete a user from the system.
+  - **GET /votes**: Get the list of votes cast.
+  
+- **Endpoints for All Citizens**: The remaining endpoints can be accessed by all registered citizens.
+
+
 ### 1. Get Votes 🗳️
 
 To retrieve the list of votes, send a `GET` request to **http://localhost:5000/votes**.
