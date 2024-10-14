@@ -77,8 +77,8 @@ If the email and password are correct, a QR code will be sent to the user’s em
 Here's how the QR and app looks like:
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="IMG_4426.jpg" alt="QR Code" width="10"/>
-  <img src="IMG_4427.jpg" alt="Google Authenticator App" width="10"/>
+  <img src="IMG_4426.jpg" alt="QR Code" width="100"/>
+  <img src="IMG_4427.jpg" alt="Google Authenticator App" width="100"/>
 </div>
 
 ### Step 3: Verify 2FA Code ✅
@@ -147,3 +147,4 @@ You’ve successfully registered, authenticated, and voted in ElectEU! Keep your
 
 
 
+```
