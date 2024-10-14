@@ -2,6 +2,8 @@
 
 Welcome to **ElectEU**! 🎉 ElectEU is a secure, reliable, and user-friendly online voting system designed for European citizens to cast their votes easily from anywhere. This app incorporates **two-factor authentication (2FA)** using Google Authenticator to ensure that voting is both secure and trustworthy.
 
+> **Note:** If you want the app to work with HTTPS, please request the necessary keys from the developers.
+
 ## 🌟 Features:
 
 - 🛡️ **Two-Factor Authentication (2FA)** for added security
@@ -18,8 +20,27 @@ Welcome to **ElectEU**! 🎉 ElectEU is a secure, reliable, and user-friendly on
 - Ensure you have **Google Authenticator** installed on your phone:
   - **Android**: [Download Here](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2)
   - **iOS**: [Download Here](https://apps.apple.com/us/app/google-authenticator/id388497605)
+- - Install **Docker Desktop** to run the application with Docker Compose. You can download it [here](https://www.docker.com/products/docker-desktop).
 
----
+### 🐳 Running the App with Docker Compose
+
+To run the ElectEU application, you'll need to use Docker Compose. Follow these steps:
+
+1. Open your terminal and navigate to the project directory.
+2. If needed, run the following command to stop any currently running containers:
+```bash
+   docker-compose down
+```
+3. Build the Docker images with the following command:
+```bash
+   docker-compose down
+```
+4. Start the application: 
+```bash
+   docker-compose up
+``` 
+
+Once the application is running, you can access the Voting App at http://localhost:5000 and the Authentication Service at http://localhost:5001.
 
 ## ⚙️ Functionality & API Workflow
 
@@ -115,7 +136,7 @@ Send a `POST` request to **http://localhost:5000/vote** to cast your vote. You m
 
 Here's how it looks:
 
-<img src="images/bearer_token.png" alt="Bearer token" width="350"/>
+<img src="images/bearer_token.png" alt="Bearer token" width="600"/>
 
 #### Example Request Body:
 
