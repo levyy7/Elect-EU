@@ -24,28 +24,28 @@ Welcome to **ElectEU**! 🎉 ElectEU is a secure, reliable, and user-friendly on
 
 ### 🐳 Running the App with Docker Compose
 
-To run the ElectEU application, you'll need to use Docker Compose. Follow these steps:
+To **run the ElectEU application**, you'll need to use **Docker Compose**. Follow these steps:
 
-1. Open your terminal and navigate to the project directory.
+1. **Open your terminal** and navigate to the **project directory**.
 2. If needed, run the following command to stop any currently running containers:
 
 ```bash
    docker-compose down
 ```
 
-3. Build the Docker images with the following command:
+3. **Build the Docker** images with the following command:
 
 ```bash
    docker-compose down
 ```
 
-4. Start the application:
+4. **Start the application**:
 
 ```bash
    docker-compose up
 ```
 
-Once the application is running, you can access the Voting App at http://localhost:5000 and the Authentication Service at http://localhost:5001.
+Once the application is running, you can access the **Voting App** at http://localhost:5000 and the **Authentication Service** at http://localhost:5001.
 
 ## ⚙️ Functionality & API Workflow
 
