@@ -1,7 +1,8 @@
 from ..models import Citizen, Admin
 from ..repositories.user_repository import UserRepository
-from ..exceptions.user_already_exists_error import UserAlreadyExistsError
-from ..exceptions.user_not_found_error import UserNotFoundError
+from ..exceptions.error_classes import (
+    UserNotFoundError, UserAlreadyExistsError
+)
 
 
 class UserService:
