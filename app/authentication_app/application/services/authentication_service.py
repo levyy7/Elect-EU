@@ -1,11 +1,13 @@
 """
 Module: authentication_service.py
-Description: This module provides the AuthenticationService class, responsible for handling user authentication,
-two-factor authentication (2FA) setup, and email functionality for the ElectEU application.
+Description: This module provides the AuthenticationService class,
+responsible for handling user authentication,two-factor authentication (2FA) setup,
+and email functionality for the ElectEU application.
 
 Classes:
-1. AuthenticationService: Handles user authentication operations such as generating 2FA secrets, sending emails with
-   QR codes, verifying 2FA codes, and checking user credentials.
+1. AuthenticationService: Handles user authentication operations such as
+   generating 2FA secrets, sending emails with QR codes, verifying 2FA codes,
+   and checking user credentials.
 """
 
 import os
@@ -21,18 +23,22 @@ from ..repositories.authentication_repository import AuthenticationRepository
 
 class AuthenticationService:
     """
-    Service class for handling user authentication, including two-factor authentication (2FA) and credential verification.
+    Service class for handling user authentication, including
+    two-factor authentication (2FA) and credential verification.
 
     Attributes:
-        authentication_repository: An instance of AuthenticationRepository to interact with the database.
+        authentication_repository: An instance of AuthenticationRepository to
+        interact with the database.
     """
 
     def __init__(self, authentication_repository: AuthenticationRepository):
         """
-        Initializes the AuthenticationService with the provided AuthenticationRepository instance.
+        Initializes the AuthenticationService with the provided
+        AuthenticationRepository instance.
 
         Args:
-            authentication_repository: A repository instance to handle database operations related to authentication.
+            authentication_repository: A repository instance to handle database
+            operations related to authentication.
         """
         self.authentication_repository = authentication_repository
 
@@ -78,7 +84,8 @@ class AuthenticationService:
 
     def generate_2fa(self, email):
         """
-        Generates a 2FA secret for the user, stores it in the database, and sends the corresponding QR code via email.
+        Generates a 2FA secret for the user, stores it in the database,
+        and sends the corresponding QR code via email.
 
         Args:
             email: The user's email address.
@@ -109,7 +116,8 @@ class AuthenticationService:
         self.send_email_with_qr_code(email, qr_code_path)
 
         # Remove the QR code file after sending the email (if needed)
-        remove_qr_code = False  # Set to True if you want to delete the QR code after sending the email
+        # Set to True if you want to delete the QR code after sending the email
+        remove_qr_code = False
         if remove_qr_code:
             try:
                 os.remove(qr_code_path)

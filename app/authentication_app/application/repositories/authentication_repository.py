@@ -1,10 +1,12 @@
 """
 Module: authentication_repository.py
-Description: This module contains the AuthenticationRepository class, which interacts with the MongoDB database
-to manage user-related operations such as storing users, retrieving user data, and handling user secrets.
+Description: This module contains the AuthenticationRepository class,
+which interacts with the MongoDB database to manage user-related operations such as
+storing users, retrieving user data, and handling user secrets.
 
 Classes:
-1. AuthenticationRepository: Manages user data storage and retrieval operations in the MongoDB database.
+1. AuthenticationRepository: Manages user data storage and retrieval operations in
+the MongoDB database.
 """
 
 from injector import inject
@@ -17,7 +19,8 @@ class AuthenticationRepository:
     Attributes:
         mongo: An instance of the MongoDB client used for database operations.
         users_table: Collection for storing user data.
-        user_secrets_table: Collection for storing user secrets (e.g., authentication tokens).
+        user_secrets_table: Collection for storing user secrets
+        (e.g., authentication tokens).
     """
 
     @inject
@@ -174,7 +177,8 @@ class AuthenticationRepository:
             A dictionary containing the user's secrets.
 
         Raises:
-            ValueError: If no user is found with the given email or if no secrets are found for that user.
+            ValueError: If no user is found with the given email or
+            if no secrets are found for that user.
         """
         # Get the user_id associated with the given email
         user = self.get_user_by_email(email)
