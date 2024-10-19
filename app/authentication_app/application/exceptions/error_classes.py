@@ -1,5 +1,5 @@
 """
-Module Name: error_classes.py
+Module: error_classes.py
 Description: This module contains custom exception classes related to user authentication and voting functionality.
 
 The exceptions are grouped into two categories:

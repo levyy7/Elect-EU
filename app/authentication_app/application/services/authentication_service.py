@@ -1,5 +1,5 @@
 """
-Module Name: authentication_service.py
+Module: authentication_service.py
 Description: This module provides the AuthenticationService class, responsible for handling user authentication,
 two-factor authentication (2FA) setup, and email functionality for the ElectEU application.
 

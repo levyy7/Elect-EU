@@ -1,5 +1,5 @@
 """
-Module Name: election_loader.py
+Module: data_loader.py
 Description: This module contains functionality to load election data from a JSON file.
 
 Classes:

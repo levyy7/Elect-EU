@@ -1,5 +1,5 @@
 """
-Module Name: authentication_controller.py
+Module: authentication_controller.py
 Description: This module defines the authentication routes for user registration, 
 retrieving user secrets, and verifying two-factor authentication (2FA) in the Flask application.
 

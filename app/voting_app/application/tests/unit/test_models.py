@@ -1,17 +1,33 @@
-import unittest
-from application.models import Citizen, Admin, VoteOption, Election
+"""
+Module: test_models.py
+
+Description: This module contains unit tests for the models in the voting application.
+It tests the functionality of the Citizen, Admin, VoteOption, and Election classes,
+including their creation and JSON serialization methods.
+"""
+
+import unittest  # Import the unittest module for creating and running tests
+from application.models import (
+    Citizen,
+    Admin,
+    VoteOption,
+    Election,
+)  # Import the application models
 
 
 class TestCitizenModel(unittest.TestCase):
     def test_create_citizen(self):
+        """Test the creation of a Citizen object."""
         citizen = Citizen(
             user_id=1, email="citizen@example.com", password="password123"
         )
+        # Check that the attributes are set correctly
         self.assertEqual(citizen.user_id, 1)
         self.assertEqual(citizen.email, "citizen@example.com")
         self.assertEqual(citizen.password, "password123")
 
     def test_citizen_to_json(self):
+        """Test the JSON serialization of a Citizen object."""
         citizen = Citizen(
             user_id=1, email="citizen@example.com", password="password123"
         )
@@ -21,17 +37,21 @@ class TestCitizenModel(unittest.TestCase):
             "password": "password123",
             "admin_rights": False,
         }
+        # Check that the to_json method produces the expected output
         self.assertEqual(citizen.to_json(), expected_json)
 
 
 class TestAdminModel(unittest.TestCase):
     def test_create_admin(self):
+        """Test the creation of an Admin object."""
         admin = Admin(user_id=1, email="admin@example.com", password="adminpass")
+        # Check that the attributes are set correctly
         self.assertEqual(admin.user_id, 1)
         self.assertEqual(admin.email, "admin@example.com")
         self.assertEqual(admin.password, "adminpass")
 
     def test_admin_to_json(self):
+        """Test the JSON serialization of an Admin object."""
         admin = Admin(user_id=1, email="admin@example.com", password="adminpass")
         expected_json = {
             "user_id": 1,
@@ -39,23 +59,27 @@ class TestAdminModel(unittest.TestCase):
             "password": "adminpass",
             "admin_rights": True,
         }
+        # Check that the to_json method produces the expected output
         self.assertEqual(admin.to_json(), expected_json)
 
 
 class TestVoteOptionModel(unittest.TestCase):
     def test_create_vote_option(self):
+        """Test the creation of a VoteOption object."""
         vote_option = VoteOption(
             vote_option_id="1",
             party_name="party1",
             candidates=["name0", "name1"],
             photo="photo1",
         )
+        # Check that the attributes are set correctly
         self.assertEqual(vote_option.id, "1")
         self.assertEqual(vote_option.party_name, "party1")
         self.assertEqual(vote_option.candidates, ["name0", "name1"])
         self.assertEqual(vote_option.photo, "photo1")
 
     def test_vote_option_to_json(self):
+        """Test the JSON serialization of a VoteOption object."""
         vote_option = VoteOption(
             vote_option_id="1",
             party_name="party1",
@@ -68,11 +92,13 @@ class TestVoteOptionModel(unittest.TestCase):
             "candidates": ["name0", "name1"],
             "photo": "photo1",
         }
+        # Check that the to_json method produces the expected output
         self.assertEqual(vote_option.to_json(), expected_json)
 
 
 class TestElectionModel(unittest.TestCase):
     def test_election_to_json(self):
+        """Test the JSON serialization of an Election object."""
         vote_option1 = VoteOption(
             vote_option_id=1,
             party_name="Party A",
@@ -108,8 +134,9 @@ class TestElectionModel(unittest.TestCase):
                 },
             ],
         }
+        # Check that the to_json method produces the expected output
         self.assertEqual(election.to_json(), expected_json)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()  # Run the tests when the script is executed directly

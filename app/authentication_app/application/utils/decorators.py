@@ -1,5 +1,5 @@
 """
-Module Name: decorators.py
+Module: decorators.py
 Description: This module contains decorators for route access control in a Flask application.
              The `login_required` decorator ensures that a user is logged in, while the
              `admin_required` decorator ensures that the logged-in user has admin privileges.

@@ -1,5 +1,5 @@
 """
-Module Name: authentication_repository.py
+Module: authentication_repository.py
 Description: This module contains the AuthenticationRepository class, which interacts with the MongoDB database
 to manage user-related operations such as storing users, retrieving user data, and handling user secrets.
 

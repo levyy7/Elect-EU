@@ -1,5 +1,5 @@
 """
-Module Name: app.py
+Module: app.py
 Description: This module initializes and configures a Flask application with MongoDB, 
 it sets up dependency injection using Flask-Injector and registers routes for authentication.
 It includes both HTTP and HTTPS server configurations, with optional SSL context.
