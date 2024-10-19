@@ -1,15 +1,17 @@
 """
 Module: app.py
-Description: This module initializes and configures a Flask application with MongoDB, 
-it sets up dependency injection using Flask-Injector and registers routes for authentication.
-It includes both HTTP and HTTPS server configurations, with optional SSL context.
+Description: This module initializes and configures a Flask application with MongoDB,
+it sets up dependency injection using Flask-Injector and registers routes
+for authentication. It includes both HTTP and HTTPS server configurations, with
+optional SSL context.
 
 Components:
 1. Flask Application: The core web application framework.
 2. PyMongo: MongoDB integration for Flask.
 3. Flask-Injector: For handling dependency injection.
 4. AuthenticationService: Handles user authentication logic.
-5. AuthenticationRepository: Manages interaction with the MongoDB user secrets collection.
+5. AuthenticationRepository: Manages interaction with the MongoDB
+user secrets collection.
 6. Blueprint Authentication: Contains the authentication routes and controllers.
 """
 
@@ -43,10 +45,10 @@ if "user_secrets" not in db.list_collection_names():
 def configure(binder: Binder):
     """
     Configures dependency injection bindings for Flask-Injector.
-    
-    Binds the AuthenticationService to an instance of itself, using 
+
+    Binds the AuthenticationService to an instance of itself, using
     AuthenticationRepository with MongoDB (PyMongo) as its data source.
-    
+
     Args:
         binder: The injector Binder instance used to define dependencies.
     """
@@ -76,9 +78,11 @@ FlaskInjector(app=app, modules=[configure])
 
 def run_app():
     """
-    Runs the Flask application, with optional SSL context if certificate and key files are present.
-    
-    If SSL files are found, the app runs in HTTPS mode on port 5001. If not, it falls back to HTTP.
+    Runs the Flask application, with optional SSL context if certificate and
+    key files are present.
+
+    If SSL files are found, the app runs in HTTPS mode on port 5001. If not,
+    it falls back to HTTP.
     """
     # Check if the certificate and key files exist for SSL
     if os.path.exists(cert_file) and os.path.exists(key_file):

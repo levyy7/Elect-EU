@@ -1,7 +1,7 @@
 """
 Module: app.py
 
-Description: This module initializes a Flask application, sets up MongoDB
+Description : This module initializes a Flask application, sets up MongoDB
 integration using Flask-PyMongo, and configures dependency injection
 using Flask-Injector. It also establishes the necessary collections
 in the MongoDB database with appropriate schema validation.

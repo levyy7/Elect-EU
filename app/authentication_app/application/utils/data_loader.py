@@ -7,10 +7,12 @@ Classes:
     - VoteOption: Represents a vote option in the election.
 
 Functions:
-    - load_election: Loads election data from a JSON file and returns an Election object.
+    - load_election: Loads election data from a JSON file and returns
+    an Election object.
 
 Usage:
-    Call the load_election function to read election data from the specified JSON file and create an Election object.
+    Call the load_election function to read election data from the specified JSON file
+    and create an Election object.
 """
 
 import json
@@ -21,7 +23,7 @@ from ..models import Election, VoteOption
 def load_election():
     """
     Load election data from a JSON file and create an Election object.
-    
+
     Returns:
         Election: An instance of the Election class containing the election data.
 
