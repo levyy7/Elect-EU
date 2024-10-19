@@ -2,9 +2,7 @@ from flask import request, jsonify, Blueprint
 from flask_injector import inject
 from ..services.user_service import UserService
 from ..services.vote_service import VoteService
-from ..exceptions.error_classes import (
-    UserNotFoundError, MissingFieldsError
-)
+from ..exceptions.error_classes import UserNotFoundError, MissingFieldsError
 
 blueprint_admin = Blueprint("admin", __name__)
 

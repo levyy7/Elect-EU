@@ -3,9 +3,7 @@ from flask_injector import inject
 from ..services.user_service import UserService
 from ..services.vote_service import VoteService
 from ..services.election_service import ElectionService
-from ..exceptions.error_classes import (
-    UserAlreadyExistsError, MissingFieldsError
-)
+from ..exceptions.error_classes import UserAlreadyExistsError, MissingFieldsError
 import jwt
 
 blueprint_citizen = Blueprint("citizen", __name__)
