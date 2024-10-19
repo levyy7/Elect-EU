@@ -2,7 +2,8 @@ from ..repositories.user_repository import UserRepository
 from ..repositories.vote_repository import VoteRepository
 from ..utils.data_loader import load_election
 from ..exceptions.error_classes import (
-    VoteNotFoundError, UserNotFoundError, VoteOptionNotFoundError, UserHasAlreadyVotedError
+    VoteNotFoundError, UserNotFoundError, VoteOptionNotFoundError,
+    UserHasAlreadyVotedError
 )
 
 

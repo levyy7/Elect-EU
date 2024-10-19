@@ -4,10 +4,8 @@ from ..services.user_service import UserService
 from ..services.vote_service import VoteService
 from ..services.election_service import ElectionService
 from ..exceptions.error_classes import (
-    UserNotFoundError, VoteOptionNotFoundError, UserHasAlreadyVotedError,
     UserAlreadyExistsError, MissingFieldsError
 )
-from flask import request, jsonify, Blueprint
 import jwt
 
 blueprint_citizen = Blueprint("citizen", __name__)
