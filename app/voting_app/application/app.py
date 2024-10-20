@@ -1,3 +1,11 @@
+"""
+Description : This module initializes a voting application, sets up MongoDB
+integration using Flask-PyMongo, and configures dependency injection
+using Flask-Injector. It also ensures the necessary collections
+in the MongoDB database with appropriate schema validation.
+"""
+
+
 import os
 from flask import Flask
 from flask_pymongo import PyMongo

@@ -1,3 +1,14 @@
+"""
+Description: This file provides the AuthenticationService class,
+and has the following functionalities:
+- User authentication.
+- Two-factor authentication (2FA) setup.
+- Retrieving the complete user database.
+- Verifying usrs
+- Checking user credentials.
+- 
+"""
+
 import pyotp
 import qrcode
 import os

@@ -1,3 +1,9 @@
+"""
+Description: This file contains the functionality to load election data from a JSON file.
+"""
+
+
+
 import json
 import os
 from ..models import Election, VoteOption

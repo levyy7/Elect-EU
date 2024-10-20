@@ -1,3 +1,13 @@
+"""
+Description: This file defines the UserService class, with the
+following functionalities:
+- Creating a user.
+- Retrieving a single or all users.
+- Deleting a user.
+
+"""
+
+
 from ..models import Citizen, Admin
 from ..repositories.user_repository import UserRepository
 from ..exceptions.user_already_exists_error import UserAlreadyExistsError

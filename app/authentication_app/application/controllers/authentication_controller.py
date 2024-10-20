@@ -1,3 +1,11 @@
+"""
+Description: This file defines the authentication routes for user registration,
+retrieving user secrets, and verifying two-factor authentication (2FA)
+in the authentification application.
+
+"""
+
+
 from flask import Blueprint, request, jsonify
 from flask_injector import inject
 from ..services.authentication_service import AuthenticationService
@@ -7,6 +15,7 @@ import datetime
 blueprint_authentication = Blueprint("authentication", __name__)
 
 
+# Handles user registration and initiates 2FA setup.
 @blueprint_authentication.route("/register", methods=["POST"])
 @inject
 def register(authentication_service: AuthenticationService):
@@ -37,6 +46,7 @@ def register(authentication_service: AuthenticationService):
         return jsonify({"error": str(e)}), 500
 
 
+# Retrieves all user secrets from the database.
 @blueprint_authentication.route("/user_secrets", methods=["GET"])
 @inject
 def get_all_user_secrets(authentication_service: AuthenticationService):
@@ -47,6 +57,8 @@ def get_all_user_secrets(authentication_service: AuthenticationService):
         return jsonify({"error": str(e)}), 500
 
 
+# Verifies the 2FA code provided by the user and generates a JWT token upon
+# successful verification.
 @blueprint_authentication.route("/verify-2fa", methods=["POST"])
 @inject
 def verify(authentication_service: AuthenticationService):
