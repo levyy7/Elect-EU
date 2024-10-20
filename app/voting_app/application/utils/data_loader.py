@@ -17,7 +17,10 @@ def load_election():
     with open(json_file_path, "r") as file:
         data = json.load(file)
 
+    # Extract the date of the election in ISO format.
     dateISO = data["dateISO"]
+
+    # Create VoteOption instances from the loaded vote options data
     vote_options = [
         VoteOption(
             vo["vote_option_id"], vo["party_name"], vo["candidates"], vo["photo"]

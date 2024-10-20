@@ -49,5 +49,6 @@ class UserService:
     def delete_user(self, user_id):
         result = self.user_repository.delete_user(user_id)
 
+        # If no user was deleted, raise a `UserNotFoundError`
         if result == 0:
             raise UserNotFoundError(user_id)
