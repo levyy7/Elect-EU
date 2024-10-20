@@ -1,3 +1,9 @@
+"""
+Description: Exception raised when the user tries to vote on a option
+that does not exist for that election.
+"""
+
+
 class VoteOptionNotFoundError(Exception):
     def __init__(self, vote_option_id):
         self.vote_option_id = vote_option_id
