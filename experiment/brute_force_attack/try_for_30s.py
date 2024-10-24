@@ -67,7 +67,7 @@ def brute_force_simple(user_id, email):
 
         # Check if the 30s has surpassed, if so exit.
         # Reason: TOTP resets every 30s.
-        if end_time - start_time > 5.0:
+        if end_time - start_time > 30.0:
             print(f"Brute-force attack stopped after {end_time-start_time:.2f} seconds with {attempts} attempts.")
             sys.exit(1)
 
@@ -99,7 +99,7 @@ def thread_function(user_id, email, start, end):
 
         # Check if the 30s has surpassed, if so exit.
         # Reason: TOTP resets every 30s.
-        if end_time - start_time > 5.0:
+        if end_time - start_time > 30.0:
             # lock global variable so no data race happens
             with attempts_lock:
                 shared_attempts += local_attempts
