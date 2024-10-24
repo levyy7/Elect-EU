@@ -162,6 +162,9 @@ def brute_force_random(user_id, email):
             print(f"Brute-force attack stopped after {end_time-start_time:.2f} seconds  with {attempts} attempts.")
             sys.exit(1)
 
+"""
+Print statements to get information about brute force attack
+"""
 def generate_report(user_id, email):
     start_time = time.time()
     result = try_code_possibility(user_id, email, "123456")
@@ -171,7 +174,7 @@ def generate_report(user_id, email):
     possible_codes = 1000000
     number_of_attempts_possible = maximum_time // time_of_single_attempt
     percentage_code_tried = (number_of_attempts_possible / possible_codes) * 100
-    print(f"Gerate the theoretical Brute-force attack report...")
+    print(f"Generate the theoretical Brute-force attack report...")
     print(f"Single attempt cost: {time_of_single_attempt} seconds.")
     print(f"Maximum number of tries before the TOTP resets: {number_of_attempts_possible} attempts")
     print(f"Possible codes tried before TOTP resets: {percentage_code_tried} %")
