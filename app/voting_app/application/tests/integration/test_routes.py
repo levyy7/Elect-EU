@@ -32,7 +32,6 @@ def mock_election_service(mocker):
 
 @pytest.fixture
 def valid_token():
-    # Create a valid JWT token for testing
     payload = {
         "user_id": "test_user_id",
         "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1),
@@ -41,8 +40,7 @@ def valid_token():
 
 
 def test_get_election(client, mock_election_service):
-    # Mock the election service to return a specific value
-    mock_election_service.return_value.get_current_election.return_value = {
+    election = {
         "election_id": 1,
         "dateISO": "06-10-2024",
         "vote_options": [
@@ -66,10 +64,11 @@ def test_get_election(client, mock_election_service):
             },
         ],
     }
+    mock_election_service.return_value.get_current_election.return_value = election
 
     response = client.get("/election")
     assert response.status_code == 200
-    assert response.json == {"name": "Election 2024"}
+    assert response.json == election
 
 
 def test_register_citizen_success(client, mock_user_service):
