@@ -17,17 +17,17 @@ def client():
 
 @pytest.fixture
 def mock_vote_service(mocker):
-    return mocker.patch("application.services.vote_service.VoteService")
+    return mocker.patch("application.controllers.citizen_controller.VoteService")
 
 
 @pytest.fixture
 def mock_user_service(mocker):
-    return mocker.patch("application.services.user_service.UserService")
+    return mocker.patch("application.controllers.citizen_controller.UserService")
 
 
 @pytest.fixture
 def mock_election_service(mocker):
-    return mocker.patch("application.services.election_service.ElectionService")
+    return mocker.patch("application.controllers.citizen_controller.ElectionService")
 
 
 @pytest.fixture
@@ -43,7 +43,28 @@ def valid_token():
 def test_get_election(client, mock_election_service):
     # Mock the election service to return a specific value
     mock_election_service.return_value.get_current_election.return_value = {
-        "name": "Election 2024"
+        "election_id": 1,
+        "dateISO": "06-10-2024",
+        "vote_options": [
+            {
+                "vote_option_id": 1,
+                "party_name": "party1",
+                "candidates": ["name0", "name1", "name2"],
+                "photo": "photo1",
+            },
+            {
+                "vote_option_id": 2,
+                "party_name": "party2",
+                "candidates": ["name0", "name1", "name2"],
+                "photo": "photo2",
+            },
+            {
+                "vote_option_id": 3,
+                "party_name": "party3",
+                "candidates": ["name0", "name1", "name2"],
+                "photo": "photo3",
+            },
+        ],
     }
 
     response = client.get("/election")
@@ -52,9 +73,7 @@ def test_get_election(client, mock_election_service):
 
 
 def test_register_citizen_success(client, mock_user_service):
-    mock_user_service.return_value.create_user.return_value = (
-        None  # Simulate successful user creation
-    )
+    mock_user_service.return_value.create_user.return_value = None  # Simulate success
 
     response = client.post(
         "/register", json={"user_id": "test_user", "password": "test_pass"}
@@ -84,9 +103,7 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
 
 
 def test_vote_success(client, mock_vote_service, valid_token):
-    mock_vote_service.return_value.vote_in_election.return_value = (
-        None  # Simulate successful voting
-    )
+    mock_vote_service.return_value.vote_in_election.return_value = None
 
     response = client.post(
         "/vote",
@@ -103,7 +120,7 @@ def test_vote_missing_auth_header(client):
     assert response.json["error"] == "Authorization token is missing or invalid"
 
 
-def test_vote_invalid_token(client, mock_vote_service):
+def test_vote_invalid_token(client):
     response = client.post(
         "/vote",
         headers={"Authorization": "Bearer invalid_token"},
@@ -113,7 +130,7 @@ def test_vote_invalid_token(client, mock_vote_service):
     assert response.json["error"] == "Invalid token"
 
 
-def test_vote_expired_token(client, mock_vote_service):
+def test_vote_expired_token(client):
     expired_token = jwt.encode(
         {
             "user_id": "test_user_id",
@@ -132,9 +149,9 @@ def test_vote_expired_token(client, mock_vote_service):
     assert response.json["error"] == "Token has expired"
 
 
-def test_vote_missing_fields(client, mock_vote_service, valid_token):
+def test_vote_missing_fields(client, valid_token):
     response = client.post(
         "/vote", headers={"Authorization": f"Bearer {valid_token}"}, json={}
-    )  # Missing vote_option_id
+    )
     assert response.status_code == 400
     assert "error" in response.json
