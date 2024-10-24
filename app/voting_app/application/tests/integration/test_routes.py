@@ -3,7 +3,7 @@ import jwt
 import datetime
 from application.app import (
     app,
-)  # Adjust this import according to your project structure
+)
 from ...exceptions.user_already_exists_error import UserAlreadyExistsError
 
 # from ...exceptions.missing_fields_error import MissingFieldsError
@@ -11,7 +11,7 @@ from ...exceptions.user_already_exists_error import UserAlreadyExistsError
 
 # Fixtures to set up the test client and mock dependencies
 @pytest.fixture
-def client(app):
+def client():
     return app.test_client()
 
 
