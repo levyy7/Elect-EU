@@ -4,6 +4,7 @@ Flask-Injector==0.15.0
 injector==0.22.0
 pymongo==4.3.3
 pytest==7.1.2
+pytest-mock==3.14.0
 black==23.1.0
 flake8==6.0.0
 pyopenssl
