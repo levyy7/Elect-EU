@@ -17,17 +17,17 @@ def client():
 
 @pytest.fixture
 def mock_vote_service(mocker):
-    return mocker.patch("app.services.vote_service.VoteService")
+    return mocker.patch("application.services.vote_service.VoteService")
 
 
 @pytest.fixture
 def mock_user_service(mocker):
-    return mocker.patch("app.services.user_service.UserService")
+    return mocker.patch("application.services.user_service.UserService")
 
 
 @pytest.fixture
 def mock_election_service(mocker):
-    return mocker.patch("app.services.election_service.ElectionService")
+    return mocker.patch("application.services.election_service.ElectionService")
 
 
 @pytest.fixture
