@@ -44,8 +44,14 @@ def try_code_possibility(user_id, email, code):
         print(f"\n\nSuccess! Code {code} is valid.")
         print(f"Bearer token: {response.json().get('token')}")
         return 0
-    else:
-        print(f"Attempted code: {code}, response: {response.status_code}")
+    elif response.status_code == 400:
+        print(f"Attempted code: {code}, response: Invalid 2FA code ({response.status_code})")
+        return 1
+    elif response.status_code == 404:
+        print(f"Attempted code: {code}, response: User or Secret not found ({response.status_code})")
+        return 1
+    elif response.status_code == 500:
+        print(f"Attempted code: {code}, response: Internal server error ({response.status_code})")
         return 1
 
 

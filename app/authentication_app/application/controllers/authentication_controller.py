@@ -77,6 +77,12 @@ def verify(authentication_service: AuthenticationService):
         else:
             return jsonify({"error": "Invalid 2FA code"}), 400
     except ValueError as e:
-        return jsonify({"error": str(e)}), 404 if "User not found" in str(e) else 400
+            error_message = str(e)
+            if "No user found" in error_message:
+                return jsonify({"error": error_message}), 404
+            elif "No secrets found" in error_message:
+                return jsonify({"error": error_message}), 404
+            else:
+                return jsonify({"error": error_message}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
