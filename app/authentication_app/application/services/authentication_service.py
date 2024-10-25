@@ -82,9 +82,6 @@ class AuthenticationService:
         # user = token_service.get_token(email)
         user_secrets = self.authentication_repository.get_user_secrets(email)
 
-        if not user_secrets:
-            return jsonify({"error": "User not found"}), 404
-
         # Access the authentication token from the user's record
         authentication_token = user_secrets.get("authentication_token")
         if authentication_token is None:

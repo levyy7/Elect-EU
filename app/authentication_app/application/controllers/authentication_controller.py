@@ -83,6 +83,6 @@ def verify(authentication_service: AuthenticationService):
             elif "No secrets found" in error_message:
                 return jsonify({"error": error_message}), 404
             else:
-                return jsonify({"error": error_message}), 400
+                return jsonify({"error": error_message}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
