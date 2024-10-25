@@ -88,17 +88,12 @@ class AuthenticationService:
         # Access the authentication token from the user's record
         authentication_token = user_secrets.get("authentication_token")
         if authentication_token is None:
-            return (
-                jsonify({"error": "Authentication token not found for this user."}),
-                400,
-            )
+            raise ValueError("Authentication token not found for this user.")
 
         # Use the authentication token to verify the 2FA code
         totp = pyotp.TOTP(authentication_token)
-        if totp.verify(code):
-            return jsonify({"message": "2FA verification successful"}), 200
-        else:
-            return jsonify({"error": "Invalid 2FA code"}), 400
+        # print("Expected TOTP code:", totp.now())  # For debugging purposes
+        return totp.verify(code)  # Returns True or False
 
     def check_credentials(self, email, password):
         result = self.authentication_repository.verify(email, password)
