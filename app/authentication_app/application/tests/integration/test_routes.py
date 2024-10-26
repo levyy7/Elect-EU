@@ -33,17 +33,13 @@ def test_register_success(client, mock_authentication_service):
             "password": "password123",
         },
     )
-    print("Response data:", response.data)
-    data = json.loads(response.data)
-
-    print(data)
+    correct_responce = {
+        "message": "Registration successful, scan the QR code in Google Authenticator",
+        "secret": "mocked_secret",
+    }
 
     assert response.status_code == 201
-    assert (
-        data["message"]
-        == "Registration successful, scan the QR code in Google Authenticator"
-    )
-    assert data["secret"] == "mocked_secret"
+    assert response.json == correct_responce
 
 
 def test_register_missing_email_password(client):
