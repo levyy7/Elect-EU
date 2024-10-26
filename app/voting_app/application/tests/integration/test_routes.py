@@ -120,7 +120,7 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
     assert response.status_code == 402
     assert (
         response.json["error"]
-        == f"UserAlreadyExistsError: User with id {user_id} already exists"
+        == f"UserAlreadyExistsError: User with id {user_id} already exists."
     )
 
 
@@ -165,7 +165,7 @@ def test_vote_expired_token(client):
     response = client.post(
         "/vote",
         headers={"Authorization": f"Bearer {expired_token}"},
-        json={"vote_option_id": "option1"},
+        json={"vote_option_id": 12},
     )
     assert response.status_code == 401
     assert response.json["error"] == "Token has expired"
