@@ -33,6 +33,7 @@ def test_register_success(client, mock_authentication_service):
             "password": "password123",
         },
     )
+    print("Response data:", response.data)
     data = json.loads(response.data)
 
     print(data)
