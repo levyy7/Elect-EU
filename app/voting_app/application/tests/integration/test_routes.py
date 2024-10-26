@@ -130,14 +130,14 @@ def test_vote_success(client, mock_vote_service, valid_token):
     response = client.post(
         "/vote",
         headers={"Authorization": f"Bearer {valid_token}"},
-        json={"user_id": 1234, "vote_option_id": 12},
+        json={"user_id": 1234, "vote_option_id": 2},
     )
     assert response.status_code == 200
     assert response.json == {"message": "Vote submitted successfully."}
 
 
 def test_vote_missing_auth_header(client):
-    response = client.post("/vote", json={"vote_option_id": 12})
+    response = client.post("/vote", json={"vote_option_id": 2})
     assert response.status_code == 401
     assert response.json["error"] == "Authorization token is missing or invalid"
 
