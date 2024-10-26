@@ -43,6 +43,7 @@ def register_citizen(user_service: UserService):
         return jsonify({"error": str(e)}), 402
     except Exception as e:
         msg = "Internal Server Error: " + str(e)
+        print(msg)  # Log the error message
         return jsonify({"error": msg}), 500
 
 
