@@ -27,7 +27,11 @@ def test_register_success(client, mock_authentication_service):
 
     response = client.post(
         "/register",
-        json={"user_id": 123, "email": "test@example.com", "password": "password123"},
+        json={
+            "user_id": 1234,
+            "email": "test@example.com",
+            "password": "password123",
+        },
     )
     data = json.loads(response.data)
 
