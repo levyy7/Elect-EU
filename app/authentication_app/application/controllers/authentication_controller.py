@@ -11,7 +11,6 @@ blueprint_authentication = Blueprint("authentication", __name__)
 @inject
 def register(authentication_service: AuthenticationService):
     email = request.json.get("email")
-    user_id = request.json.get("user_id")
     password = request.json.get("password")
 
     if not email or not password:
@@ -22,7 +21,7 @@ def register(authentication_service: AuthenticationService):
 
     # Generate and send the initial code for 2FA setup
     try:
-        secret = "mocked_secret"
+        secret = authentication_service.generate_2fa(email)
         response = {
                 "message": "Registration successful, scan the QR code in Google Authenticator",
                 "secret": secret,
