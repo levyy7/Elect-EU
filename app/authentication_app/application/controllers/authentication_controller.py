@@ -15,10 +15,13 @@ def register(authentication_service: AuthenticationService):
     password = request.json.get("password")
 
     if not email or not password or not user_id:
-        return jsonify({"error": "Email and password are required"}), 400
+        return jsonify({"error": "User ID, email, and password are required"}), 400
 
     if not authentication_service.check_credentials(email, password):
         return jsonify({"error": "Invalid email or password"}), 401
+
+    if authentication_service.check_user_exists(user_id):
+        return jsonify({"error": "User already exists"}), 409  # Conflict
 
     # Generate and send the initial code for 2FA setup
     try:
