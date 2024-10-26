@@ -22,8 +22,7 @@ def register(authentication_service: AuthenticationService):
 
     # Generate and send the initial code for 2FA setup
     try:
-        secret = authentication_service.generate_2fa(email)
-        print(f"Generated 2FA secret: {secret}")  # Debug print to confirm `secret` value
+        #secret = authentication_service.generate_2fa(email)
         return jsonify({"message": "Citizen created succesfully"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
