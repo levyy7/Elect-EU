@@ -87,7 +87,7 @@ def test_get_all_user_secrets_failure(client, mock_authentication_service):
 # Test verify 2FA route
 def test_verify_2fa_success(client, mock_authentication_service):
     mock_authentication_service.verify_2fa.return_value = True
-    user_id = "user123"
+    user_id = 1234
     email = "test@example.com"
 
     # Simulate the expected JWT token generation
@@ -117,7 +117,7 @@ def test_verify_2fa_invalid_code(client, mock_authentication_service):
     response = client.post(
         "/verify-2fa",
         json={
-            "user_id": "user123",
+            "user_id": 1234,
             "email": "test@example.com",
             "code": "invalid_code",
         },
@@ -141,7 +141,7 @@ def test_verify_2fa_failure(client, mock_authentication_service):
 
     response = client.post(
         "/verify-2fa",
-        json={"user_id": "user123", "email": "test@example.com", "code": "123456"},
+        json={"user_id": 1234, "email": "test@example.com", "code": "123456"},
     )
     data = json.loads(response.data)
 

@@ -33,7 +33,7 @@ def mock_election_service(mocker):
 @pytest.fixture
 def valid_token():
     payload = {
-        "user_id": "test_user_id",
+        "user_id": 1234,
         "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1),
     }
     return jwt.encode(payload, "your_secret_key", algorithm="HS256")
@@ -77,7 +77,7 @@ def test_register_citizen_success(client, mock_user_service):
     response = client.post(
         "/register",
         json={
-            "user_id": "test_user1",
+            "user_id": 1234,
             "email": "test_user1@gmail.com",
             "password": "test_pass",
         },
@@ -88,7 +88,7 @@ def test_register_citizen_success(client, mock_user_service):
 
 def test_register_citizen_missing_fields(client):
     response = client.post(
-        "/register", json={"user_id": "test_user"}
+        "/register", json={"user_id": 1234}
     )  # Missing password
     assert response.status_code == 400
     assert "error" in response.json
@@ -103,7 +103,7 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
     client.post(
         "/register",
         json={
-            "user_id": "existing_user",
+            "user_id": 1234,
             "email": "existing_user@gmail.com",
             "password": "test_pass",
         },
@@ -113,7 +113,7 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
     response = client.post(
         "/register",
         json={
-            "user_id": "existing_user",
+            "user_id": 1234,
             "email": "existing_user@gmail.com",
             "password": "test_pass",
         },
@@ -128,7 +128,7 @@ def test_vote_success(client, mock_vote_service, valid_token):
     response = client.post(
         "/vote",
         headers={"Authorization": f"Bearer {valid_token}"},
-        json={"user_id": "existing_user", "vote_option_id": "option1"},
+        json={"user_id": 1234, "vote_option_id": "option1"},
     )
     assert response.status_code == 200
     assert response.json == {"message": "Vote submitted successfully."}
@@ -153,7 +153,7 @@ def test_vote_invalid_token(client):
 def test_vote_expired_token(client):
     expired_token = jwt.encode(
         {
-            "user_id": "test_user_id",
+            "user_id": 1234,
             "exp": datetime.datetime.utcnow() - datetime.timedelta(seconds=1),
         },
         "your_secret_key",
