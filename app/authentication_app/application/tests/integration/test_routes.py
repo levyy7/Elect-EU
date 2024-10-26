@@ -35,6 +35,8 @@ def test_register_success(client, mock_authentication_service):
     )
     data = json.loads(response.data)
 
+    print(data)
+
     assert response.status_code == 201
     assert (
         data["message"]
