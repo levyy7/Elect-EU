@@ -70,6 +70,8 @@ def vote(vote_service: VoteService):
         vote_service.vote_in_election(user_id, vote_option_id)
 
         return jsonify({"message": "Vote submitted successfully."}), 200
+    except MissingFieldsError as e:
+        return jsonify({"error": str(e)}), 400
     except jwt.ExpiredSignatureError:
         return jsonify({"error": "Token has expired"}), 401
     except jwt.InvalidTokenError:
