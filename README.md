@@ -214,7 +214,7 @@ To retrieve information about the current election, send a `GET` request to **ht
 
 ```json
 {
-  "date": "06-10-2024",
+  "dateISO": "06-10-2024",
   "election_id": 1,
   "vote_options": [
     {

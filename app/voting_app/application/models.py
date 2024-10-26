@@ -60,6 +60,6 @@ class Election:
         vote_options_json = [vote_option.to_json() for vote_option in self.vote_options]
         return {
             "election_id": self.id,
-            "date": self.dateISO,
+            "dateISO": self.dateISO,
             "vote_options": vote_options_json,
         }
