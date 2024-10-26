@@ -119,7 +119,7 @@ def test_verify_2fa_invalid_code(client, mock_authentication_service):
         json={
             "user_id": 1234,
             "email": "test@example.com",
-            "code": "invalid_code",
+            "code": 123456,
         },
     )
     data = json.loads(response.data)
@@ -141,7 +141,7 @@ def test_verify_2fa_failure(client, mock_authentication_service):
 
     response = client.post(
         "/verify-2fa",
-        json={"user_id": 1234, "email": "test@example.com", "code": "123456"},
+        json={"user_id": 1234, "email": "test@example.com", "code": 123456},
     )
     data = json.loads(response.data)
 
