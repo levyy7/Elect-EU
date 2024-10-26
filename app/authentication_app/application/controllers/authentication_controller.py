@@ -23,12 +23,12 @@ def register(authentication_service: AuthenticationService):
     # Generate and send the initial code for 2FA setup
     try:
         secret = authentication_service.generate_2fa(email)
-        logging.debug(f"Generated 2FA Secret: {secret}")
+        print(secret)
         response = jsonify({
             "message": "Registration successful, scan the QR code in Google Authenticator",
             "secret": secret,
         })
-        logging.debug(f"Response: {response}")
+        print(response)
         return response, 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500

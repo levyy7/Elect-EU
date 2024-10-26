@@ -31,7 +31,7 @@ def test_register_success(client, mock_authentication_service):
     )
     data = json.loads(response.data)
 
-    # assert response.status_code == 201
+    assert response.status_code == 201
     assert (
         data["message"]
         == "Registration successful, scan the QR code in Google Authenticator"
