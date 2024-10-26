@@ -23,10 +23,10 @@ def mock_authentication_service(mocker):
 # Test registration route
 def test_register_success(client, mock_authentication_service):
     mock_authentication_service.check_credentials.return_value = True
-    mock_authentication_service.generate_2fa.return_value = 123
+    mock_authentication_service.generate_2fa.return_value = "mocked_secret"
 
     response = client.post(
-        "/register", json={"email": "test@example.com", "password": "password123"}
+        "/register", json={"user_id": 123, "email": "test@example.com", "password": "password123"}
     )
     data = json.loads(response.data)
 
@@ -35,7 +35,7 @@ def test_register_success(client, mock_authentication_service):
         data["message"]
         == "Registration successful, scan the QR code in Google Authenticator"
     )
-    assert data["secret"] == 123
+    assert data["secret"] == "mocked_secret"
 
 
 def test_register_missing_email_password(client):
@@ -50,7 +50,7 @@ def test_register_invalid_credentials(client, mock_authentication_service):
     mock_authentication_service.check_credentials.return_value = False
 
     response = client.post(
-        "/register", json={"email": "test@example.com", "password": "password123"}
+        "/register", json={"email": "test@example.com", "password": "password1234"}
     )
     data = json.loads(response.data)
 

@@ -11,9 +11,10 @@ blueprint_authentication = Blueprint("authentication", __name__)
 @inject
 def register(authentication_service: AuthenticationService):
     email = request.json.get("email")
+    user_id = request.json.get("user_id")
     password = request.json.get("password")
 
-    if not email or not password:
+    if not email or not password or not user_id:
         return jsonify({"error": "Email and password are required"}), 400
 
     if not authentication_service.check_credentials(email, password):
