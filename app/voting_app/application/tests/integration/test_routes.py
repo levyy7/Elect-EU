@@ -100,7 +100,12 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
     )
 
     response = client.post(
-        "/register", json={"user_id": "existing_user", "password": "test_pass"}
+        "/register",
+        json={
+            "user_id": "existing_user",
+            "email": "existing_user@gmail.com",
+            "password": "test_pass",
+        },
     )
     assert response.status_code == 402
     assert response.json["error"] == "User already exists"
