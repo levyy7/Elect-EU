@@ -11,9 +11,9 @@ class UserService:
     def create_user(self, data, admin_rights=False):
         all_users = self.user_repository.get_all_users()
         email, password, user_id = (
+            data.get("user_id"),
             data.get("email"),
             data.get("password"),
-            data.get("user_id"),
         )
 
         if any(user.get("user_id") == user_id for user in all_users):

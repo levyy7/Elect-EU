@@ -77,9 +77,9 @@ def test_register_citizen_success(client, mock_user_service):
     response = client.post(
         "/register",
         json={
-            "email": "test_user@gmail.com",
+            "user_id": "test_user1",
+            "email": "test_user1@gmail.com",
             "password": "test_pass",
-            "user_id": "test_user",
         },
     )
     assert response.status_code == 200
