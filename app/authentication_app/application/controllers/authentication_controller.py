@@ -14,8 +14,8 @@ def register(authentication_service: AuthenticationService):
     user_id = request.json.get("user_id")
     password = request.json.get("password")
 
-    if not email or not password or not user_id:
-        return jsonify({"error": "User ID, email, and password are required"}), 400
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
 
     if not authentication_service.check_credentials(email, password):
         return jsonify({"error": "Invalid email or password"}), 401
