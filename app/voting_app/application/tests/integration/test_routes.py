@@ -71,11 +71,16 @@ def test_get_election(client, mock_election_service):
     assert response.json == election
 
 
-def test_register_citizen_success(client, mock_user_service): 
+def test_register_citizen_success(client, mock_user_service):
     mock_user_service.return_value.create_user.return_value = None  # Simulate success
 
     response = client.post(
-        "/register", json={"email": "test_user@gmail.com", "password": "test_pass", "user_id": "test_user"}
+        "/register",
+        json={
+            "email": "test_user@gmail.com",
+            "password": "test_pass",
+            "user_id": "test_user",
+        },
     )
     assert response.status_code == 200
     assert response.json == {"message": "Citizen created succesfully"}
@@ -107,7 +112,7 @@ def test_vote_success(client, mock_vote_service, valid_token):
     response = client.post(
         "/vote",
         headers={"Authorization": f"Bearer {valid_token}"},
-        json={  "vote_option_id": "existing_user", "vote_option_id": "option1"},
+        json={"user_id": "existing_user", "vote_option_id": "option1"},
     )
     assert response.status_code == 200
     assert response.json == {"message": "Vote submitted successfully."}
