@@ -21,19 +21,15 @@ def register(authentication_service: AuthenticationService):
         return jsonify({"error": "Invalid email or password"}), 401
 
     # Generate and send the initial code for 2FA setup
-    secret = authentication_service.generate_2fa(email)
     try:
-        return (
-            jsonify(
-                {
-                    "message": "Registration successful, \
-                                    scan the QR code in Google \
-                                    Authenticator",
-                    "secret": secret,
-                }
-            ),
-            201,
-        )
+        secret = authentication_service.generate_2fa(email)
+        logging.debug(f"Generated 2FA Secret: {secret}")
+        response = jsonify({
+            "message": "Registration successful, scan the QR code in Google Authenticator",
+            "secret": secret,
+        })
+        logging.debug(f"Response: {response}")
+        return response, 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
