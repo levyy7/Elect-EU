@@ -96,12 +96,13 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
     mock_user_service.return_value.create_user.side_effect = UserAlreadyExistsError(
         "User already exists"
     )
+    user_id = 1234
 
     # Intitialize user.
     client.post(
         "/register",
         json={
-            "user_id": 1234,
+            "user_id": user_id,
             "email": "existing_user@gmail.com",
             "password": "test_pass",
         },
@@ -111,13 +112,13 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
     response = client.post(
         "/register",
         json={
-            "user_id": 1234,
+            "user_id": user_id,
             "email": "existing_user@gmail.com",
             "password": "test_pass",
         },
     )
     assert response.status_code == 402
-    assert response.json["error"] == "User already exists"
+    assert response.json["error"] == f"UserAlreadyExistsError: User with id {user_id} already exists"
 
 
 def test_vote_success(client, mock_vote_service, valid_token):
@@ -126,14 +127,14 @@ def test_vote_success(client, mock_vote_service, valid_token):
     response = client.post(
         "/vote",
         headers={"Authorization": f"Bearer {valid_token}"},
-        json={"user_id": 1234, "vote_option_id": "option1"},
+        json={"user_id": 1234, "vote_option_id": 12},
     )
     assert response.status_code == 200
     assert response.json == {"message": "Vote submitted successfully."}
 
 
 def test_vote_missing_auth_header(client):
-    response = client.post("/vote", json={"vote_option_id": "option1"})
+    response = client.post("/vote", json={"vote_option_id": 12})
     assert response.status_code == 401
     assert response.json["error"] == "Authorization token is missing or invalid"
 
