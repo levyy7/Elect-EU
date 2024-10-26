@@ -87,9 +87,7 @@ def test_register_citizen_success(client, mock_user_service):
 
 
 def test_register_citizen_missing_fields(client):
-    response = client.post(
-        "/register", json={"user_id": 1234}
-    )  # Missing password
+    response = client.post("/register", json={"user_id": 1234})  # Missing password
     assert response.status_code == 400
     assert "error" in response.json
 
