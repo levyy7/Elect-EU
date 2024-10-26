@@ -37,5 +37,6 @@ integration_tests:
   script:
     - docker-compose up -d
     - docker-compose exec voting_app python -m pytest application/tests/integration
-    - docker-compose exec authentication_app python -m pytest -s application/tests/integration
+    - docker-compose exec authentication_app python -m pytest --capture=no -v application/tests/integration
+    - docker-compose logs authentication_app
     - docker-compose down
