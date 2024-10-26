@@ -31,7 +31,7 @@ def register_citizen(user_service: UserService):
     try:
         data = request.get_json()
 
-        if not data.get("user_id") or not data.get("password"):
+        if not data.get("user_id") or not data.get("password") or not data.get("email"):
             raise MissingFieldsError()
 
         user_service.create_user(data)
