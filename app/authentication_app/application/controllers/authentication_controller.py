@@ -13,6 +13,7 @@ def register(authentication_service: AuthenticationService):
     email = request.json.get("email")
     user_id = request.json.get("user_id")
     password = request.json.get("password")
+    print("email data:", email)
 
     if not email or not password:
         return jsonify({"error": "Email and password are required"}), 400
