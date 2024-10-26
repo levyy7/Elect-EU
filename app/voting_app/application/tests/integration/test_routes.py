@@ -118,7 +118,10 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
         },
     )
     assert response.status_code == 402
-    assert response.json["error"] == f"UserAlreadyExistsError: User with id {user_id} already exists"
+    assert (
+        response.json["error"]
+        == f"UserAlreadyExistsError: User with id {user_id} already exists"
+    )
 
 
 def test_vote_success(client, mock_vote_service, valid_token):
