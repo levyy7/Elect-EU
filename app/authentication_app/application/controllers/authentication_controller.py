@@ -20,12 +20,9 @@ def register(authentication_service: AuthenticationService):
     if not authentication_service.check_credentials(email, password):
         return jsonify({"error": "Invalid email or password"}), 401
 
-    if authentication_service.check_user_exists(user_id):
-        return jsonify({"error": "User already exists"}), 409  # Conflict
-
     # Generate and send the initial code for 2FA setup
+    secret = authentication_service.generate_2fa(email)
     try:
-        secret = authentication_service.generate_2fa(email)
         return (
             jsonify(
                 {
