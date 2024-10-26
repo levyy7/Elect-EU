@@ -13,7 +13,7 @@ def register(authentication_service: AuthenticationService):
     email = request.json.get("email")
     user_id = request.json.get("user_id")
     password = request.json.get("password")
-    print("email data:", email)
+    print("\nemail data:", email)
 
     if not email or not password:
         return jsonify({"error": "Email and password are required"}), 400
@@ -24,12 +24,12 @@ def register(authentication_service: AuthenticationService):
     # Generate and send the initial code for 2FA setup
     try:
         secret = authentication_service.generate_2fa(email)
-        print(secret)
+        print("\nsecret data:", secret)
         response = jsonify({
             "message": "Registration successful, scan the QR code in Google Authenticator",
             "secret": secret,
         })
-        print(response)
+        print("\nresponce data:", responce)
         return response, 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
