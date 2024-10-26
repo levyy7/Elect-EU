@@ -42,7 +42,7 @@ def valid_token():
 def test_get_election(client, mock_election_service):
     election = {
         "election_id": 1,
-        "dateISO": "06-10-2024",
+        "date": "06-10-2024",
         "vote_options": [
             {
                 "vote_option_id": 1,

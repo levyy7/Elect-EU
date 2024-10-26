@@ -51,15 +51,15 @@ class VoteOption:
 
 
 class Election:
-    def __init__(self, election_id, dateISO, vote_options):
+    def __init__(self, election_id, date, vote_options):
         self.id = election_id
-        self.dateISO = dateISO
+        self.date = date
         self.vote_options = vote_options
 
     def to_json(self):
         vote_options_json = [vote_option.to_json() for vote_option in self.vote_options]
         return {
             "election_id": self.id,
-            "dateISO": self.dateISO,
+            "date": self.date,
             "vote_options": vote_options_json,
         }

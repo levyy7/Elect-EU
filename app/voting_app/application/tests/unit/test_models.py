@@ -87,12 +87,12 @@ class TestElectionModel(unittest.TestCase):
         )
         election = Election(
             election_id=1,
-            dateISO="2024-10-10",
+            date="2024-10-10",
             vote_options=[vote_option1, vote_option2],
         )
         expected_json = {
             "election_id": 1,
-            "dateISO": "2024-10-10",
+            "date": "2024-10-10",
             "vote_options": [
                 {
                     "vote_option_id": 1,

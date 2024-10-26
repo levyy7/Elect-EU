@@ -11,7 +11,7 @@ def load_election():
     with open(json_file_path, "r") as file:
         data = json.load(file)
 
-    dateISO = data["dateISO"]
+    date = data["date"]
     vote_options = [
         VoteOption(
             vo["vote_option_id"], vo["party_name"], vo["candidates"], vo["photo"]
@@ -20,4 +20,4 @@ def load_election():
     ]
     election_id = data["election_id"]
 
-    return Election(election_id, dateISO, vote_options)
+    return Election(election_id, date, vote_options)

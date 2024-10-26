@@ -92,7 +92,7 @@ election_schema = {
                 "description": "Auto-incremented ID for the election",
             },
             "election_date": {
-                "bsonType": "dateISO",
+                "bsonType": "date",
                 "description": "ISO date of the election",
             },
         },
