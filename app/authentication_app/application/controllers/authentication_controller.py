@@ -23,8 +23,8 @@ def register(authentication_service: AuthenticationService):
     try:
         secret = authentication_service.generate_2fa(email)
         response = {
-                "message": "Registration successful, scan the QR code in Google Authenticator",
-                "secret": secret,
+            "message": "Registration successful, scan the QR code in Google Authenticator",
+            "secret": secret,
         }
         return response, 201
     except Exception as e:
