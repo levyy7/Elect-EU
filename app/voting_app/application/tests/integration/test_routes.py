@@ -39,7 +39,6 @@ def valid_token():
     return jwt.encode(payload, "your_secret_key", algorithm="HS256")
 
 
-"""
 def test_get_election(client, mock_election_service):
     election = {
         "election_id": 1,
@@ -178,4 +177,3 @@ def test_vote_missing_fields(client, valid_token):
     )
     assert response.status_code == 400
     assert "error" in response.json
-"""
