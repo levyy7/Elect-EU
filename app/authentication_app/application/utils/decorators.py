@@ -1,6 +1,6 @@
 """
-Description: This file contains decorators for route access control in a authentication application.
-The `login_required` decorator ensures that a user is logged in, while the
+Description: This file contains decorators for route access control in a authentication
+application. The `login_required` decorator ensures that a user is logged in, while the
 admin_required` decorator ensures that the logged-in user has admin privileges.
 
 """
@@ -11,6 +11,7 @@ from flask import jsonify
 # from flask_login import current_user
 from functools import wraps
 
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -19,6 +20,7 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
 
 def admin_required(f):
     @wraps(f)
