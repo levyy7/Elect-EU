@@ -1,10 +1,9 @@
 """
 Description: This file defines the citizen-related functionalities:
-- Retrieving a election. 
+- Retrieving a election.
 - Registering a citizen.
 - Voting
 """
-
 
 
 from flask import request, jsonify, Blueprint
@@ -12,12 +11,8 @@ from flask_injector import inject
 from ..services.user_service import UserService
 from ..services.vote_service import VoteService
 from ..services.election_service import ElectionService
-from ..exceptions.user_not_found_error import UserNotFoundError
-from ..exceptions.vote_option_not_found_error import VoteOptionNotFoundError
-from ..exceptions.user_has_already_voted_error import UserHasAlreadyVotedError
 from ..exceptions.user_already_exists_error import UserAlreadyExistsError
 from ..exceptions.missing_fields_error import MissingFieldsError
-from flask import request, jsonify, Blueprint
 import jwt
 
 blueprint_citizen = Blueprint("citizen", __name__)

@@ -1,7 +1,7 @@
 """
-Description: This file contains the functionality to load election data from a JSON file.
+Description: This file contains the functionality to load election data from
+a JSON file.
 """
-
 
 
 import json
