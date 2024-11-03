@@ -1,3 +1,10 @@
+"""
+Description: This file defines the VoteService class with the
+following functionalities:
+- Voting in an election.
+- Retrieving a sigle vote or all votes
+"""
+
 from ..repositories.user_repository import UserRepository
 from ..repositories.vote_repository import VoteRepository
 from ..utils.data_loader import load_election

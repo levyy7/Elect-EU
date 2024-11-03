@@ -1,3 +1,9 @@
+"""
+Description: This file contains unit tests for the voting application,
+Testing the endpoints related to storing votes and retrieving votes. 
+"""
+
+
 import unittest
 from application.app import app
 

@@ -1,3 +1,13 @@
+"""
+Description: This file defines the UserService class, with the
+following functionalities:
+- Creating a user.
+- Retrieving a single or all users.
+- Deleting a user.
+
+"""
+
+
 from ..models import Citizen, Admin
 from ..repositories.user_repository import UserRepository
 from ..exceptions.user_already_exists_error import UserAlreadyExistsError
@@ -39,5 +49,6 @@ class UserService:
     def delete_user(self, user_id):
         result = self.user_repository.delete_user(user_id)
 
+        # If no user was deleted, raise a `UserNotFoundError`
         if result == 0:
             raise UserNotFoundError(user_id)
