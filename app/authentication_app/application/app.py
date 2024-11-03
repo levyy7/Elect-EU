@@ -1,6 +1,6 @@
 """
-Description: This file initializes and configures a authentication application with MongoDB,
-it sets up dependency injection using Flask-Injector and registers routes
+Description: This file initializes and configures a authentication application
+with MongoDB, it sets up dependency injection using Flask-Injector and registers routes
 for authentication. It includes both HTTP and HTTPS server configurations, with
 optional SSL context.
 """

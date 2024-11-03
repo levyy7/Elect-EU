@@ -6,7 +6,6 @@ and has the following functionalities:
 - Retrieving the complete user database.
 - Verifying usrs
 - Checking user credentials.
-- 
 """
 
 import pyotp
