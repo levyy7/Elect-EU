@@ -132,6 +132,14 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
 
 def test_vote_success(client, mock_vote_service, valid_token):
     mock_vote_service.return_value.vote_in_election.return_value = None
+    client.post(
+        "/register",
+        json={
+            "user_id": 1234,
+            "email": "existing_user@gmail.com",
+            "password": "test_pass",
+        },
+    )
 
     response = client.post(
         "/vote",
