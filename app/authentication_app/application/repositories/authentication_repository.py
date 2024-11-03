@@ -1,3 +1,14 @@
+"""
+Description: This file contains the AuthenticationRepository class,
+which interacts with the MongoDB database to manage the following user operations:
+- Adding or deleting a user.
+- Retrieving a single users data by email or id.
+- Retrieving the complete user database.
+- Verifying a user.
+and handling user secrets.
+"""
+
+
 from injector import inject
 
 
@@ -28,7 +39,7 @@ class AuthenticationRepository:
         return user
 
     def get_user_id_by_email(self, email):
-        """Retrieve a user by their user_id."""
+        """Retrieve a user by their email."""
         user = self.users_table.find_one({"email": email}, {"_id": 0})
         return user.get("user_id")
 

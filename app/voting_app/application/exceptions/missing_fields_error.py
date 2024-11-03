@@ -1,3 +1,8 @@
+"""
+Description: Exception for when required fields are missing in a request or operation.
+"""
+
+
 class MissingFieldsError(Exception):
     def __init__(self):
         self.message = "Missing fields."

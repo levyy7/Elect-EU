@@ -261,6 +261,23 @@ If the deletion is successful, you will receive the following response:
 }
 ```
 
+## Brute Force Attack
+
+To ensure people with bad intentions can't hack their way into your account, we have integrated our own brute-force attack.
+This experiment is our way to proof your account won't be hacked when your password and email address have been leaked.
+It includes the functionality that prints a small report to show that the chance of breaking into your account is very low.
+
+The file can be found in `./experiment/brute_force_attack.py` and can be used as follows:
+
+```bash
+python3 ./experiment/brute_force_attack.py <user_id> <email> <method>
+```
+The `method` input argument has the following options:
+- `simple`  -> This method tries to guess your TOTP of google authenticator within 30 seconds by iterating from 000000 to 999999.
+- `random`  -> This method has the same functionality as `simple`, but uses random numbers between 000000 to 999999 to guess..
+- `mp`      -> This method has the same functionality as `simple`, but uses multiple threads (depending on your cpu) to guess the TOTP.
+- `report`  -> This functionality uses the 'simple' functionality for 30 seconds and calculates the percentage of tried guesses from the maximum posibility.
+
 ## 🎉 Congratulations! 🎉
 
 You’ve successfully registered, authenticated, and voted in ElectEU! Keep your Bearer token safe, and ensure to follow the security measures during the voting process. 🛡️

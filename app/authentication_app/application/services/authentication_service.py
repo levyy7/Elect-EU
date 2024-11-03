@@ -1,17 +1,30 @@
+"""
+Description: This file provides the AuthenticationService class,
+and has the following functionalities:
+- User authentication.
+- Two-factor authentication (2FA) setup.
+- Retrieving the complete user database.
+- Verifying usrs
+- Checking user credentials.
+"""
+
 import pyotp
 import qrcode
 import os
 import smtplib
+import time
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
-from flask import jsonify
 from ..repositories.authentication_repository import AuthenticationRepository
+
+MINIMUM_WAIT_ATTEMPT = 2
 
 
 class AuthenticationService:
     def __init__(self, authentication_repository: AuthenticationRepository):
         self.authentication_repository = authentication_repository
+        self.last_attempt_time = {}
 
     def send_email_with_qr_code(self, email, qr_code_path):
         # Email credentials
@@ -78,27 +91,30 @@ class AuthenticationService:
         return secret
 
     def verify_2fa(self, email, code):
+        current_time = time.time()
+
+        # Check the last attempt time for this user
+        if email in self.last_attempt_time:
+            time_since_last_attempt = current_time - self.last_attempt_time[email]
+            if time_since_last_attempt < MINIMUM_WAIT_ATTEMPT:
+                raise ValueError("Please wait before trying again.")
+
+        # Update the last attempt time
+        self.last_attempt_time[email] = current_time
+
         # Search for the user in the 'users' collection by email
         # user = token_service.get_token(email)
         user_secrets = self.authentication_repository.get_user_secrets(email)
 
-        if not user_secrets:
-            return jsonify({"error": "User not found"}), 404
-
         # Access the authentication token from the user's record
         authentication_token = user_secrets.get("authentication_token")
         if authentication_token is None:
-            return (
-                jsonify({"error": "Authentication token not found for this user."}),
-                400,
-            )
+            raise ValueError("Authentication token not found for this user.")
 
         # Use the authentication token to verify the 2FA code
         totp = pyotp.TOTP(authentication_token)
-        if totp.verify(code):
-            return jsonify({"message": "2FA verification successful"}), 200
-        else:
-            return jsonify({"error": "Invalid 2FA code"}), 400
+        # print("Expected TOTP code:", totp.now())  # For debugging purposes
+        return totp.verify(code)  # Returns True or False
 
     def check_credentials(self, email, password):
         result = self.authentication_repository.verify(email, password)

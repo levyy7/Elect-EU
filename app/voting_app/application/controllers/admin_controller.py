@@ -1,3 +1,10 @@
+"""
+Description: This file defines the admin-related functionalities:
+- Adding/Deleting users. 
+- Retrieving all the votes.
+"""
+
+
 from flask import request, jsonify, Blueprint
 from flask_injector import inject
 from ..services.user_service import UserService

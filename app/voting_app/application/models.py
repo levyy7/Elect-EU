@@ -1,3 +1,11 @@
+"""
+Description: This file  defines user-related classes for an election system,
+including User, Admin, Citizen, VoteOption, and Election. It provides
+functionalities to represent users and their vote options, as well as
+the elections they participate in.
+"""
+
+
 from abc import ABC, abstractmethod
 
 # import datetime

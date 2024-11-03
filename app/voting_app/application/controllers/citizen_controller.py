@@ -1,3 +1,11 @@
+"""
+Description: This file defines the citizen-related functionalities:
+- Retrieving a election.
+- Registering a citizen.
+- Voting
+"""
+
+
 from flask import request, jsonify, Blueprint
 from flask_injector import inject
 from ..services.user_service import UserService
