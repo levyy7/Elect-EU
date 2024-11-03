@@ -18,7 +18,7 @@ def load_election():
         data = json.load(file)
 
     # Extract the date of the election in ISO format.
-    dateISO = data["dateISO"]
+    date = data["date"]
 
     # Create VoteOption instances from the loaded vote options data
     vote_options = [
@@ -29,4 +29,4 @@ def load_election():
     ]
     election_id = data["election_id"]
 
-    return Election(election_id, dateISO, vote_options)
+    return Election(election_id, date, vote_options)

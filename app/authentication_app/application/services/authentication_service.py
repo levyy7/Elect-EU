@@ -118,7 +118,7 @@ class AuthenticationService:
 
     def check_credentials(self, email, password):
         result = self.authentication_repository.verify(email, password)
-        if result == 0:
+        if result:
             return False
         else:
             return True

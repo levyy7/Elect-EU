@@ -1,6 +1,6 @@
 """
 Description: This file defines the admin-related functionalities:
-- Adding/Deleting users. 
+- Adding/Deleting users.
 - Retrieving all the votes.
 """
 
