@@ -52,10 +52,8 @@ def test_register_missing_email_password(client):
 
 
 def test_register_invalid_credentials(client, mock_authentication_service):
-    mock_authentication_service.check_credentials.return_value = False
-
     response = client.post(
-        "/register", json={"email": "test@example.com", "password": "password1234"}
+        "/register", json={"email": "invalid@example.com", "password": "password1234"}
     )
     data = json.loads(response.data)
 
@@ -66,15 +64,8 @@ def test_register_invalid_credentials(client, mock_authentication_service):
 # Test user_secrets route
 def test_get_all_user_secrets_success(client, mock_authentication_service):
     mock_authentication_service.get_all_user_secrets.return_value = [
-        {
-            "secret": "secret1"
-        },
-        {
-            "secret": "secret2"
-        },
+        "secret1", "secret2",
     ]
-
-
     response = client.get("/user_secrets")
     data = json.loads(response.data)
 
@@ -110,7 +101,11 @@ def test_verify_2fa_success(client, mock_authentication_service):
     )
 
     response = client.post(
-        "/verify-2fa", json={"user_id": 1234, "email": "test@example.com", "code": 123456}
+        "/verify-2fa", json={
+            "user_id": 1234,
+            "email": "test@example.com",
+            "code": 123456,
+        }
     )
     data = json.loads(response.data)
 
