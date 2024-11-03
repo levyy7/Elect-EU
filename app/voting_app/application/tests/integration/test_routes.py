@@ -1,12 +1,15 @@
+"""
+Description: This file contains unit tests for the voting application,
+Testing the endpoints related to storing votes and retrieving votes.
+"""
+
+
 import pytest
+import unittest
+from application.app import app
 import jwt
 import datetime
-from application.app import (
-    app,
-)
 from ...exceptions.user_already_exists_error import UserAlreadyExistsError
-
-# from ...exceptions.missing_fields_error import MissingFieldsError
 
 
 # Fixtures to set up the test client and mock dependencies
@@ -107,14 +110,6 @@ def test_register_citizen_user_already_exists(client, mock_user_service):
             "password": "test_pass",
         },
     )
-"""
-Description: This file contains unit tests for the voting application,
-Testing the endpoints related to storing votes and retrieving votes. 
-"""
-
-
-import unittest
-from application.app import app
 
 
 class VoteAppTestCase(unittest.TestCase):
@@ -153,7 +148,7 @@ class VoteAppTestCase(unittest.TestCase):
     response = client.post(
         "/register",
         json={
-            "user_id": user_id,
+            "user_id": 1,
             "email": "existing_user@gmail.com",
             "password": "test_pass",
         },
@@ -161,7 +156,7 @@ class VoteAppTestCase(unittest.TestCase):
     assert response.status_code == 402
     assert (
         response.json["error"]
-        == f"UserAlreadyExistsError: User with id {user_id} already exists."
+        == "UserAlreadyExistsError: User with id 1 already exists."
     )
 
 
