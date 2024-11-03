@@ -65,9 +65,14 @@ def test_register_invalid_credentials(client, mock_authentication_service):
 # Test user_secrets route
 def test_get_all_user_secrets_success(client, mock_authentication_service):
     mock_authentication_service.get_all_user_secrets.return_value = [
-        "secret1",
-        "secret2"
+        {
+            "secret": "secret1"
+        },
+        {
+            "secret": "secret2"
+        },
     ]
+
 
     response = client.get("/user_secrets")
     data = json.loads(response.data)
