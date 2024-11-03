@@ -81,7 +81,6 @@ def brute_force_simple(user_id, email):
 
     # Iterate from 000000 to 999999 (6 digits)
     for code_tuple in itertools.product("0123456789", repeat=6):
-
         code = "".join(code_tuple)
 
         result = try_code_possibility(user_id, email, code)
