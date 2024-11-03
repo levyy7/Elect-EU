@@ -1,5 +1,5 @@
 Flask==2.3.2
-werkzeug==2.2.3
+Werkzeug==2.3.3
 Flask-PyMongo==2.3.0
 Flask-Injector==0.15.0
 injector==0.22.0
