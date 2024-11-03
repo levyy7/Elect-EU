@@ -1,7 +1,5 @@
 import pytest
-import jwt
 from flask import json
-from datetime import datetime, timedelta
 from application.app import (
     app,
 )
