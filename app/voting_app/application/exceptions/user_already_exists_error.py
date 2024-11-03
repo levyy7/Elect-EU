@@ -1,3 +1,9 @@
+"""
+Description: Exception raised when you try to add a user that already
+    exists in the database.
+"""
+
+
 class UserAlreadyExistsError(Exception):
     def __init__(self, user_id):
         self.user_id = user_id

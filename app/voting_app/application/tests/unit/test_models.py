@@ -1,3 +1,10 @@
+"""
+Description: This file contains unit tests for the models in the voting application.
+It tests the functionality of the Citizen, Admin, VoteOption, and Election classes,
+including their creation and JSON serialization methods.
+"""
+
+
 import unittest
 from application.models import Citizen, Admin, VoteOption, Election
 
