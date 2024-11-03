@@ -1,13 +1,12 @@
 {
-
     "election_id" : 1,
-    "dateISO": "06-10-2024",
+    "date": "06-10-2024",
     "vote_options": [
         {
             "vote_option_id": 1,
             "party_name": "party1",
             "candidates": ["name0", "name1", "name2"],
-            "photo": "photo1"
+            "photo": "photo1" 
         },
         {
             "vote_option_id": 2,

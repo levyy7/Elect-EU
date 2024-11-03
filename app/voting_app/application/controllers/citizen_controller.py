@@ -35,7 +35,7 @@ def register_citizen(user_service: UserService):
     try:
         data = request.get_json()
 
-        if not data.get("user_id") or not data.get("password"):
+        if not data.get("user_id") or not data.get("password") or not data.get("email"):
             raise MissingFieldsError()
 
         user_service.create_user(data)
@@ -47,6 +47,7 @@ def register_citizen(user_service: UserService):
         return jsonify({"error": str(e)}), 402
     except Exception as e:
         msg = "Internal Server Error: " + str(e)
+        print(msg)  # Log the error message
         return jsonify({"error": msg}), 500
 
 
@@ -74,6 +75,8 @@ def vote(vote_service: VoteService):
         vote_service.vote_in_election(user_id, vote_option_id)
 
         return jsonify({"message": "Vote submitted successfully."}), 200
+    except MissingFieldsError as e:
+        return jsonify({"error": str(e)}), 400
     except jwt.ExpiredSignatureError:
         return jsonify({"error": "Token has expired"}), 401
     except jwt.InvalidTokenError:
