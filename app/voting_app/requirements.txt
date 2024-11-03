@@ -6,5 +6,5 @@ pymongo==4.3.3
 pytest==7.1.2
 black==23.1.0
 flake8==6.0.0
-pyopenssl
+pyopenssl==24.2.1
 PyJWT==2.8.0
