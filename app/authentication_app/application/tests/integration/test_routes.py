@@ -24,7 +24,6 @@ def mock_authentication_service(mocker):
 # Test registration route
 def test_register_success(client, mock_authentication_service):
     mock_authentication_service.check_credentials.return_value = True
-    mock_authentication_service.generate_2fa.return_value = False
 
     response = client.post(
         "/register",
@@ -116,7 +115,6 @@ def test_verify_2fa_success(client, mock_authentication_service):
 
 def test_verify_2fa_invalid_code(client, mock_authentication_service):
     time.sleep(2)
-    mock_authentication_service.verify_2fa.return_value = False
 
     response = client.post(
         "/verify-2fa",
